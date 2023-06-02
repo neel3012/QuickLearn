@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+.herobanner{
+   margin-bottom: 40px;
+    /* background-color: aqua; */
+    
+}
+.herobanner_inside{
+    width: 80%;
+    height:40vh;
+    margin: auto;
+    position: relative;
+    
+   
+}
+.herobanner_img{
+    margin: auto;
+    width:100%;
+    background-color:red ;
+    height:auto;
+    object-fit: contain;
+}
+.herobanner_text{
+    margin:0 20px;
+    position: absolute;
+    font-family: 'Poppins', sans-serif;
+    top: 100px; /* Adjust the vertical position as needed */
+    left: 10px; /* Adjust the horizontal position as needed */
+    color: rgba(0, 0, 0, 0.7); /* Customize the text color */
+    font-size: 18px; /* Customize the font size */
+    font-weight: bold; /* Customize the font weight */
+    background-color: white; /* Customize the background color and opacity */
+    padding: 8px; /* Customize the padding */
+}

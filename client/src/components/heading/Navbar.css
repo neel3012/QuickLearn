@@ -1,0 +1,89 @@
+.navbar{
+    width:100%;
+    height: 100px;
+    display: flex;
+ 
+    
+}
+.navbar_logo{
+    flex:0.2;
+    
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.navbar_logoimg{
+    height: 110px;
+    width:110px;
+    object-fit: cover;
+    padding:10px 0;
+
+}
+.navbar_search{
+    flex:0.5px;
+   outline: none;
+    display: flex;
+    align-items: center;
+    margin:0 20px;
+    
+}
+.navbar_searchinner{
+    display: flex;
+     width:100%;
+    align-items: center;
+    outline: none;
+}
+.navbar_searchbody{
+    width:60%;
+    border-left: none;
+    height:40px;
+    border-color: black ;
+    border-width: thin;
+    padding:10px;outline: none;
+    border-radius: 0px 50px 50px 0px;
+}
+.navbar_searchicon{
+    /* border:1px solid black;
+    
+    border-radius: 50px 0px 0px 50px; */
+  
+    
+    border-radius: 50px 0px 0px 50px;
+    border: 1px solid black;
+    border-right: none;
+    padding: 9px 0;
+    border-right: none;
+}
+.navbar_outersearchicon{
+    display: flex;
+  
+    justify-content: center;
+    align-items: center;
+}
+
+
+.navbar_ending{
+    flex:0.8;
+    
+}
+.navbar_searchbody{
+
+}
+.navbar_ending{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:0 20px;
+    width:100%;
+}
+
+.navbar_underline{
+   
+  height: 1px;
+  /* Customize the color of the line */
+  box-shadow: 0 2px 4px grey;
+  border: none;
+  
+
+}
