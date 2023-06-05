@@ -18,6 +18,7 @@ function App() {
     <Routes>
         
          <Route path='/joinasteacher' element={<Joinasteacher/>}/>
+         
          <Route path='/' element={<Home/>}/>
    </Routes>
    <Footer/>

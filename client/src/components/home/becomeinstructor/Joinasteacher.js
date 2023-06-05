@@ -2,7 +2,9 @@ import React,{useState,useEffect, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import './Joinasteacher.css'
 import inst from '././../../../assets/innn.jpeg'
-import 'animate.css';
+import 'animate.css';import Alert from '@mui/material/Alert';
+
+import axios from 'axios';
 function Joinasteacher() {
     const [showSignIn, setShowSignIn] = useState(false);
     const formRef = useRef(null);
@@ -27,17 +29,30 @@ function Joinasteacher() {
   const [password, setPassword] = useState("");
   const [username,setUsername]=useState('');
   const [openpop,setopenpop]=useState(true);
-
+  const [successmsg,showsuccessmsg]=useState(null);
   //to handle signup
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`
-      Email: ${email}
-      Password: ${password}
-      username:${username}
+    // console.log(`
+    //   Email: ${email}
+    //   Password: ${password}
+    //   username:${username}
       
-    `);
+    // `);
+    const data={
+      username,
+      password,
+      email
+    }
+    await axios.post('http://localhost:5000/joinasteacher',data).then(res=>{window.alert(res.data.msg)}).catch(err=>console.log(err))
+    setEmail('');
+    setPassword('');
+    setUsername('');
+    setopenpop(false)
   }
+
+  //for connecting to a axios
+
 
   //to handle login
   const handleLogin=(e)=>{
@@ -56,6 +71,8 @@ function Joinasteacher() {
     // const [showSignIn, setShowSignIn] = useState(false)
   return (
     <div className='jointutor'>
+      {successmsg &&       window.alert({successmsg})
+}
         <div className='jointutor_herobanner'>
 
 
