@@ -62,7 +62,13 @@ function Joinasteacher() {
       password,
       
     }
-    await axios.post('http://localhost:5000/teacherlogin',data).then(res=>{window.alert(res.data.msg);console.log('added',res.data)}).catch(err=>console.log(err))
+    await axios.post('http://localhost:5000/teacherlogin',data)
+    .then(res=>{
+      window.alert(res.data.msg);
+      console.log('added',res.data);
+      //add code for redercting to diff page after login...
+    })
+    .catch(err=>console.log(err))
     setEmail('');
     setPassword('');
    
