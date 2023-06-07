@@ -2,7 +2,7 @@ import React,{useState,useEffect, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import './Joinasteacher.css'
 import inst from '././../../../assets/innn.jpeg'
-import 'animate.css';import Alert from '@mui/material/Alert';
+import 'animate.css';
 
 import axios from 'axios';
 function Joinasteacher() {
@@ -55,10 +55,19 @@ function Joinasteacher() {
 
 
   //to handle login
-  const handleLogin=(e)=>{
+  const handleLogin=async (e)=>{
     e.preventDefault();
-    console.log(`Email: ${email}
-    Password: ${password}`)
+    const data={
+      email,
+      password,
+      
+    }
+    await axios.post('http://localhost:5000/teacherlogin',data).then(res=>{window.alert(res.data.msg);console.log('added',res.data)}).catch(err=>console.log(err))
+    setEmail('');
+    setPassword('');
+   
+
+    //aahi aavse code...
   }
 
   //for pop up functionality within same elemnt

@@ -1,6 +1,7 @@
 const Tutor = require('../model/tutorregistrationSchema.js');
-
+const Token=require('../model/token.js');
 const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
 
 exports.registerTutor = async (req, res) => {
   try {
@@ -21,6 +22,35 @@ exports.registerTutor = async (req, res) => {
     res.status(201).json({"msg":"tutor added successfully"});
   } catch (error) {
     // Handle error
-    res.status(400).json({ "message": "error in tutor signup" });
+    res.status(400).json({ "msg": "error in tutor signup" });
   }
 };
+
+exports.loginteacher=async (req,res)=>{
+ 
+    // res.status(200).json({"message":"login success"})
+  console.log(req.body.email)
+    const findusername=await Tutor.findOne({email:req.body.email});
+    console.log(findusername)
+    if(!findusername){
+      return res.status(400).json({"msg":"email id doesn't exist"});
+    }
+    try{
+      let match = await bcrypt.compare(req.body.password, findusername.password);
+      if(match){
+      const accessToken = jwt.sign(findusername.toJSON(),'mynameisneelpatel', { expiresIn: '15m'});
+      const refreshToken = jwt.sign(findusername.toJSON(), 'hereistherefreshrate');
+      
+      const newToken = new Token({ token: refreshToken });
+      await newToken.save();
+  
+      res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken,email: findusername.email, username: findusername.username,"msg":"you are logged in"});
+  
+  } else {
+      res.status(400).json({ "msg": 'Password does not match' })
+  }
+  }
+  catch(err){
+    console.log(err);
+  }
+}
