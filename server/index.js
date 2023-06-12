@@ -6,7 +6,6 @@ const Router=require('./routes/route.js')
 const cors=require('cors')
 // Create Express app
 const app = express();
-
 // Set up body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

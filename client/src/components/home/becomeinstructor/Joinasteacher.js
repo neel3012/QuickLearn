@@ -1,13 +1,18 @@
 import React,{useState,useEffect, useRef} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import './Joinasteacher.css'
 import inst from '././../../../assets/innn.jpeg'
 import 'animate.css';
+import { useSelector, useDispatch } from 'react-redux'
+
 
 import axios from 'axios';
+import { addtutordata, isTutorAuthenticated } from '../../../app/features/tutorReducer';
 function Joinasteacher() {
     const [showSignIn, setShowSignIn] = useState(false);
     const formRef = useRef(null);
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
   
     useEffect(() => {
       window.addEventListener('click', handleClickOutsideForm);
@@ -66,13 +71,19 @@ function Joinasteacher() {
     .then(res=>{
       window.alert(res.data.msg);
       console.log('added',res.data);
+      sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
+      sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
       //add code for redercting to diff page after login...
+      dispatch(addtutordata(res.data));   //this will store data to redux coming from mongoose and data is like refreshtoken,accesstoken,email,usernamae
+      dispatch(isTutorAuthenticated());   //this basically dispach an method that has data of true or false which state that tutor login then true otherwise false and i used it in app.js for render component
+      navigate('/addcourses');
+
     })
     .catch(err=>console.log(err))
     setEmail('');
     setPassword('');
    
-
+  
     //aahi aavse code...
   }
 

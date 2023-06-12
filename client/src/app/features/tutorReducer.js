@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-  value: '',
+  value: {},
+  tutorpresnet:false
 }
 
 export const counterSlice = createSlice({
@@ -14,11 +15,18 @@ export const counterSlice = createSlice({
     addtutordata: (state,action) => {
       state.value=action.payload
     },
-    
+    isTutorAuthenticated:(state)=>{
+      state.tutorpresnet=true;
+    },
+    isTutornotAuthenticated:(state)=>{
+      state.tutorpresnet=false;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addtutordata } = counterSlice.actions
+export const { addtutordata,isTutorAuthenticated,isTutornotAuthenticated } = counterSlice.actions
+export const sendtutordata=(state)=>state.counter.value;
+export const checkTutorAuthentication=(state)=>state.counter.tutorpresnet;
 
 export default counterSlice.reducer
