@@ -10,83 +10,134 @@ import axios from 'axios';
 import { addtutordata, isTutorAuthenticated } from '../../../app/features/tutorReducer';
 function Joinasteacher() {
     const [showSignIn, setShowSignIn] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [username,setUsername]=useState('');
+    const [openpop,setopenpop]=useState(true);
+    const [successmsg,showsuccessmsg]=useState(null);
+    const [tutorinndata,setTutorinndata]=useState({});
     const formRef = useRef(null);
     const dispatch=useDispatch();
     const navigate=useNavigate();
   
-    useEffect(() => {
-      window.addEventListener('click', handleClickOutsideForm);
-  
-      return () => {
-        window.removeEventListener('click', handleClickOutsideForm);
-      };
-    }, []);
-  
-    const handleClickOutsideForm = (event) => {
-      if (formRef.current && !formRef.current.contains(event.target)) {
-        setShowSignIn(false);
-      }
-    };
 
-
-
-    const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username,setUsername]=useState('');
-  const [openpop,setopenpop]=useState(true);
-  const [successmsg,showsuccessmsg]=useState(null);
   //to handle signup
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {  //handling register
     event.preventDefault();
-    // console.log(`
-    //   Email: ${email}
-    //   Password: ${password}
-    //   username:${username}
-      
-    // `);
+    
     const data={
       username,
       password,
       email
     }
-    await axios.post('http://localhost:5000/joinasteacher',data).then(res=>{window.alert(res.data.msg)}).catch(err=>console.log(err))
-    setEmail('');
+    const res=await fetch('http://localhost:5000/joinasteacher',{
+      method:'POST',
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    })
+    const tutordata=await res.json();
+    console.log(tutordata)
+    if(tutordata.status===422 ||tutordata.status===400 || !tutordata ||tutordata.msg){
+      window.alert('invalid registration')
+    }
+    else{
+      window.alert('registration successfull...')
+      setEmail('');
     setPassword('');
     setUsername('');
-    setopenpop(false)
+      setopenpop(false)
+    }
+    // await axios.post('http://localhost:5000/joinasteacher',data).then(res=>{window.alert(res.data.msg)}).catch(err=>console.log(err))
+    // setEmail('');
+    // setPassword('');
+    // setUsername('');
+    // setopenpop(false)
   }
 
   //for connecting to a axios
 
 
-  //to handle login
-  const handleLogin=async (e)=>{
-    e.preventDefault();
-    const data={
-      email,
-      password,
-      
-    }
-    await axios.post('http://localhost:5000/teacherlogin',data)
-    .then(res=>{
-      window.alert(res.data.msg);
-      console.log('added',res.data);
-      sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
-      sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
-      //add code for redercting to diff page after login...
-      dispatch(addtutordata(res.data));   //this will store data to redux coming from mongoose and data is like refreshtoken,accesstoken,email,usernamae
-      dispatch(isTutorAuthenticated());   //this basically dispach an method that has data of true or false which state that tutor login then true otherwise false and i used it in app.js for render component
-      navigate('/addcourses');
 
-    })
-    .catch(err=>console.log(err))
-    setEmail('');
-    setPassword('');
+
+
+
+
+
+
+  //to handle login
+  // const handleLogin=async (e)=>{
+  //   e.preventDefault();
+  //   const data={
+  //     email,
+  //     password,
+      
+  //   }
+  //   await axios.post('http://localhost:5000/teacherlogin',data)
+  //   .then(res=>{
+  //     window.alert(res.data.msg);
+  //     console.log('added',res.data);
+  //     sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
+  //     sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
+  //     //add code for redercting to diff page after login...
+  //     dispatch(addtutordata(res.data));   //this will store data to redux coming from mongoose and data is like refreshtoken,accesstoken,email,usernamae
+  //     dispatch(isTutorAuthenticated());   //this basically dispach an method that has data of true or false which state that tutor login then true otherwise false and i used it in app.js for render component
+  //     navigate('/addcourses');
+
+  //   })
+  //   .catch(err=>console.log(err))
+  //   setEmail('');
+  //   setPassword('');
    
   
-    //aahi aavse code...
-  }
+  //   //aahi aavse code...
+  // }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+      password,
+    };
+    const res=await fetch('http://localhost:5000/teacherlogin',{
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    
+    const logintutdata=await res.json();
+    console.log(logintutdata);
+    if(logintutdata.status===422 ||logintutdata.status===400 || !logintutdata ||logintutdata.msg){
+      window.alert(logintutdata.msg)
+    }
+    else{
+      window.alert('login successfull...')
+      setEmail('');
+    setPassword('');
+    
+    dispatch(isTutorAuthenticated(res.data)); // Pass the token data as the payload
+        dispatch(addtutordata(logintutdata)); 
+        setTutorinndata(res.data);
+    
+    navigate('/addcourses');
+    }
 
+    // await axios.post('http://localhost:5000/teacherlogin', data)
+    //   .then(res => {
+    //     window.alert(res.data.msg);
+    //     sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
+    //     sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
+    //     dispatch(isTutorAuthenticated(res.data)); // Pass the token data as the payload
+    //     dispatch(addtutordata(res.data)); 
+    //     setTutorinndata(res.data);
+    //     navigate('/addcourses');
+    //   })
+    //   .catch(err => console.log(err));
+    // setEmail('');
+    // setPassword('');
+  };
+  
   //for pop up functionality within same elemnt
   const signinclickhandle=()=>{
     setopenpop(false)
@@ -127,7 +178,7 @@ function Joinasteacher() {
                 <div className="animate_animated animate__shakeX sign-in-form ">
     
     
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} method='POST'>
       <h1>Create Account</h1>
 <br/>
       <label>
@@ -165,7 +216,7 @@ function Joinasteacher() {
      
       <button>Submit</button>
       <br/>
-      <p>Aready have an account <button onClick={signinclickhandle}>Sign in</button></p>
+      <p>Already have an account <button onClick={signinclickhandle}>Sign in</button></p>
     </form>
   
 
@@ -174,7 +225,7 @@ function Joinasteacher() {
                 <div className="animate_animated animate__shakeX sign-in-form ">
     
     
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} method='POST'>
       <h1>Login Account</h1>
 <br/>
       <label>

@@ -1,0 +1,30 @@
+.course_inner{
+    width:80%;
+    margin: auto;
+    display: flex;
+    overflow-x: hidden;
+    align-items: center;
+    justify-content: center;
+}
+.course_left{
+    flex: 0.8;
+    display: flex;
+}
+.course_right{
+   display: flex;
+
+}
+.course_right1{
+    width:80%;
+    margin:auto
+}
+.course_img{
+    width: 250px;;
+    height: 300px;
+    object-fit: contain;
+}
+.course_right2{
+    width:10%;
+    margin:auto;
+    
+}

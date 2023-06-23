@@ -6,10 +6,13 @@ const Router=require('./routes/route.js')
 const cors=require('cors')
 // Create Express app
 const app = express();
+
 // Set up body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors())
+// Add the following headers in your server response
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+// app.use(cors())
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority', {

@@ -6,11 +6,13 @@ import Badge from '@mui/material/Badge';
 import Link from '@mui/material/Link';
 import LogoHeader from '../../assets/navbar_logo.png'
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from '@mui/material';
+import { IconButton, capitalize } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { deepOrange } from '@mui/material/colors';
+import { sendtutordata } from '../../app/features/tutorReducer';
+import { useSelector } from 'react-redux';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -49,6 +51,9 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const getalldata = useSelector(sendtutordata);  //this data come from redux store about tutor...
+  // const {username}=getalldata?.findusername;
+  
   return (
     <>
      <div className='navbar'>
@@ -90,7 +95,7 @@ const Navbar = () => {
         variant="dot"
        
       >
-        <Avatar alt="Remy Sharp"  sx={{ bgcolor: deepOrange[500] }} src="/static/images/avatar/1.jpg" />
+        <Avatar alt={getalldata?.findusername?.username? getalldata?.findusername?.username : "N"}  sx={{ bgcolor: deepOrange[500] }} src="/static/images/avatar/1.jpg" style={{textTransform:"capitalize"}} />
       </StyledBadge>
            </Link>
         </div>

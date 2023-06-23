@@ -16,10 +16,12 @@ import Addcourses from './components/courses/Addcourses';
 import { useSelector } from 'react-redux';
 import { checkTutorAuthentication } from './app/features/tutorReducer';
 import NotFound from './components/NotFound';
+import Addcoursehere from './components/courses/Addcoursehere';
 
 function App() {
   const isTutorAuthenticated = useSelector(checkTutorAuthentication);
   //if not possible then change name of tutor
+  
   return (
     <>
       
@@ -29,7 +31,9 @@ function App() {
         
          <Route path='/joinasteacher' element={<Joinasteacher/>}/>
          {isTutorAuthenticated && (<Route path='/addcourses' element={<Addcourses/>}/>)}
-        
+         {isTutorAuthenticated && (<Route path='/addcoursehere' element={<Addcoursehere/>}/>)}
+
+         {/* <Route path='/addcourses' element={<Addcourses/>}/> */}
          <Route path='/' element={<Home/>}/>
          <Route path="*" element={<NotFound />} />
    </Routes>

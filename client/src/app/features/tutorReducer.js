@@ -4,6 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   value: {},
+  // accessToken:null,
+  // refreshToken:null,
   tutorpresnet:false
 }
 
@@ -17,6 +19,8 @@ export const counterSlice = createSlice({
     },
     isTutorAuthenticated:(state)=>{
       state.tutorpresnet=true;
+  //     state.accessToken = action.payload.accessToken;
+  // state.refreshToken = action.payload.refreshToken;
     },
     isTutornotAuthenticated:(state)=>{
       state.tutorpresnet=false;
@@ -28,5 +32,7 @@ export const counterSlice = createSlice({
 export const { addtutordata,isTutorAuthenticated,isTutornotAuthenticated } = counterSlice.actions
 export const sendtutordata=(state)=>state.counter.value;
 export const checkTutorAuthentication=(state)=>state.counter.tutorpresnet;
+
+
 
 export default counterSlice.reducer
