@@ -5,31 +5,38 @@ const courseSchema = new mongoose.Schema({
       required: true,
       
     },
-    password: {
-      type: String,
-      required: true
-    },
-    email: {
+    title: {
       type: String,
       required: true,
-      unique: true
-    },
-    subname:{
-      type:String,
-      required:true
-    }
+      
+      
+  },
+  description: {
+      type: String,
+      required: true
+  },
+  picture: {
+      type: String,
+      required: false
+  },
+  price:{
+    type: Number,
+    required: true
+  },
+  approximateHours:{
+    type:String,
+    required:false
+  },
+  userfile:{
+    type:String,
+    required:false
+  },
+  createdDate: {
+      type: Date,
+      default: Date.now,
+  }
     
   });
-//   tutorregistrationSchema.methods.generateAuthtoken= async function(){
-//     try{
-//           let token=await jwt.sign({_id:this._id},'generatedsecretkeybyneelpatel');
-//           this.tokens=this.tokens.concat({token:token});
-//          await this.save();
-//          return token;
-//     }
-//     catch(err){
-//       console.log('error generate in token creation',err);
-//     }
-//   }
+
   const Course = mongoose.model('Course', courseSchema);
   module.exports=Course

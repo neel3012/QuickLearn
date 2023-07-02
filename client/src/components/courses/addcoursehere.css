@@ -1,0 +1,17 @@
+.course_priceinput{
+    margin:60px 0;
+    border-bottom:1px solid black;
+    width:300px
+    
+}
+
+.course_descr {
+    width: 100%;
+    border: none;
+    margin-top: 50px;
+    font-size: 18px;
+    height: 150px!important; /* Set the desired height */
+    &:focus-visible {
+      outline: none;
+    }
+  }

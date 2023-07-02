@@ -5,7 +5,7 @@ import inst from '././../../../assets/innn.jpeg'
 import 'animate.css';
 import { useSelector, useDispatch } from 'react-redux'
 
-
+import swal from 'sweetalert'
 import axios from 'axios';
 import { addtutordata, isTutorAuthenticated } from '../../../app/features/tutorReducer';
 function Joinasteacher() {
@@ -38,10 +38,15 @@ function Joinasteacher() {
     const tutordata=await res.json();
     console.log(tutordata)
     if(tutordata.status===422 ||tutordata.status===400 || !tutordata ||tutordata.msg){
-      window.alert('invalid registration')
+      
+      swal("Invalid Registration","Please check provided all info and try later!","error")
+       
+    
     }
     else{
-      window.alert('registration successfull...')
+     
+      swal("Register successfully","success")
+      
       setEmail('');
     setPassword('');
     setUsername('');
@@ -109,7 +114,8 @@ function Joinasteacher() {
     const logintutdata=await res.json();
     console.log(logintutdata);
     if(logintutdata.status===422 ||logintutdata.status===400 || !logintutdata ||logintutdata.msg){
-      window.alert(logintutdata.msg)
+      // window.alert()
+      swal(logintutdata.msg,"please provide right credetials...","info");
     }
     else{
       window.alert('login successfull...')
@@ -123,19 +129,7 @@ function Joinasteacher() {
     navigate('/addcourses');
     }
 
-    // await axios.post('http://localhost:5000/teacherlogin', data)
-    //   .then(res => {
-    //     window.alert(res.data.msg);
-    //     sessionStorage.setItem('accessToken', `Bearer ${res.data.accessToken}`);
-    //     sessionStorage.setItem('refreshToken', `Bearer ${res.data.refreshToken}`);
-    //     dispatch(isTutorAuthenticated(res.data)); // Pass the token data as the payload
-    //     dispatch(addtutordata(res.data)); 
-    //     setTutorinndata(res.data);
-    //     navigate('/addcourses');
-    //   })
-    //   .catch(err => console.log(err));
-    // setEmail('');
-    // setPassword('');
+    
   };
   
   //for pop up functionality within same elemnt

@@ -1,10 +1,16 @@
-.course_inner{
-    width:80%;
+/* .course_inner{
+    width:70%;
     margin: auto;
     display: flex;
     overflow-x: hidden;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+.course_inner:hover{
+    background-color: #f0f0f0;
+    padding: 20px;
 }
 .course_left{
     flex: 0.8;
@@ -20,11 +26,198 @@
 }
 .course_img{
     width: 250px;;
-    height: 300px;
-    object-fit: contain;
+    background-color: red;
+    height: 150px;
+    object-fit: fill;
 }
 .course_right2{
     width:10%;
     margin:auto;
     
+}
+.course_authorname{
+    font-weight: bold;
+}
+.course_line{
+    
+        height: 1px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: gray;
+ margin-bottom: 20px;
+ margin-top:20px;
+      
+}
+.course_btn{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #ff6b6b;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+.course_btn:hover {
+    background-color: #ff4d4d;
+  }
+  
+  .course_btn:focus {
+    outline: none;
+  }
+  
+  .course_btn:active {
+    transform: translateY(1px);
+  }
+  .n1{
+    margin:10px 0;
+  }
+  .courses_heading{
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .m1{
+    margin-left: 20px;
+  }
+  .courses_heading h1{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+  }
+  .course_mainname{
+    font-weight: 500;
+  }
+  .n{
+    display: flex;
+    align-items: center;
+  } */
+
+  .course_inner{
+    width:80%;
+    margin: auto;
+    display: flex;
+    overflow-x: hidden;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+.course_inner:hover{
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+.course_left{
+    flex: 0.2;
+    display: flex;
+}
+.course_right{
+   display: flex;
+   flex:0.78;
+}
+.course_right1{
+    width:80%;
+    margin:auto
+}
+.course_img{
+    width: 250px;;
+   
+    height: 150px;
+    object-fit: fill;
+}
+.course_right2{
+    width:20%;
+    margin:auto;
+    
+}
+.course_authorname{
+    font-weight: bold;
+}
+.course_line{
+    
+        height: 1px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: gray;
+ margin-bottom: 20px;
+ margin-top:20px;
+      
+}
+.course_btn{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #ff6b6b;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+.course_btn:hover {
+    background-color: #ff4d4d;
+  }
+  
+  .course_btn:focus {
+    outline: none;
+  }
+  
+  .course_btn:active {
+    transform: translateY(1px);
+  }
+  .n1{
+    margin:10px 0;
+  }
+  .courses_heading{
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .m1{
+    margin-left: 20px;
+  }
+  .courses_heading h1{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+  }
+  .course_mainname{
+    font-weight: 500;
+  }
+  .n{
+    display: flex;
+    align-items: center;
+  }
+  .addcourses_main{
+    display: flex;
+    flex-direction: column;
+  }
+  .no_courses_added {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  font-size: 32px;
+  color: #fff;
+  background-image: url("../../assets/back.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(10%); /* Adjust the blur intensity as needed */
+  -webkit-backdrop-filter: blur(10%);
+  }
+  
+.no_courses_added p {
+  color: #28282b; /* Set the text color to ensure visibility */
 }

@@ -28,40 +28,6 @@ exports.registerTutor = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-// exports.loginteacher=async (req,res)=>{
- 
-//     // res.status(200).json({"message":"login success"})
-//   console.log(req.body.email)
-//     const findusername=await Tutor.findOne({email:req.body.email});
-//     console.log(findusername)
-//     if(!findusername){
-//       return res.status(400).json({"msg":"email id doesn't exist"});
-//     }
-//     try{
-//       let match = await bcrypt.compare(req.body.password, findusername.password);
-//       if(match){
-//       const accessToken = jwt.sign(findusername.toJSON(),'mynameisneelpatel', { expiresIn: '15m'});
-//       const refreshToken = jwt.sign(findusername.toJSON(), 'hereistherefreshrate');
-      
-//       const newToken = new Token({ token: refreshToken });
-//       await newToken.save();
-  
-//       res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken,email: findusername.email, username: findusername.username,"msg":"you are logged in"});
-  
-//   } else {
-//       res.status(400).json({ "msg": 'Password does not match' })
-//   }
-//   }
-//   catch(err){
-//     console.log(err);
-//   }
-// }
 exports.loginteacher = async (req, res) => {
   try {
     let token;
@@ -96,24 +62,7 @@ res.setHeader("Access-Control-Allow-Credentials", "true");
       return res.status(400).json({ "msg": "Email ID doesn't exist" });
     }
 
-   
-    // if (match) {
-    //   // const accessToken = jwt.sign(findusername.toJSON(), 'mynameisneelpatel', { expiresIn: '15m' });
-    //   // const refreshToken = jwt.sign(findusername.toJSON(), 'hereistherefreshrate');
-
-    //   // const newToken = new Token({ token: refreshToken });
-    //   // await newToken.save();
-
-    //   // res.status(200).json({
-    //   //   accessToken: accessToken,
-    //   //   refreshToken: refreshToken,
-    //   //   email: findusername.email,
-    //   //   username: findusername.username,
-    //   //   "successmsg": "You are logged in"
-    //   // });
-    // } else {
-    //   res.status(400).json({ "msg": 'Password does not match' });
-    // }
+  
   } catch (err) {
     console.log(err);
     res.status(500).json({ "msg": "Internal server error" });

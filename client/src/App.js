@@ -19,9 +19,8 @@ import NotFound from './components/NotFound';
 import Addcoursehere from './components/courses/Addcoursehere';
 
 function App() {
-  const isTutorAuthenticated = useSelector(checkTutorAuthentication);
+   const isTutorAuthenticated = useSelector(checkTutorAuthentication);
   //if not possible then change name of tutor
-  
   return (
     <>
       
