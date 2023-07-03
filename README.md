@@ -9,3 +9,5 @@ till now we have done
 front page design (01-06-2023 DONE)
 tutor page design (05-06-2023 DONE)
 tutor signin-out (04-06-23 - 06-06-2023)
+
+Done with course addition functionaity with beautiful card layout that shows all available courses by tutor names
