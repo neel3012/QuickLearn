@@ -152,13 +152,15 @@ const Addcoursehere = () => {
   //   }
   // };
   const getFiles = async () => {
+    console.log(filedata)
     if (filedata) {
       let data1 = new FormData();
       data1.append("file", filedata);
-      data1.append("name", filedata.name);
-  
+      data1.append("name",filedata.name)
+      // data1.append("name", );
+     console.log(data1)
       try {
-        const res = await fetch("http://localhost:5000/uploadedfile/upload", {
+        const res = await fetch("http://localhost:5000/uploadedfile/uploadtutorfile", {
           method: "POST",
           body: data1,
         });
@@ -173,6 +175,9 @@ const Addcoursehere = () => {
       } catch (error) {
         console.error("Error uploading file", error);
       }
+    }
+    else{
+      console.log('file data is undefined')
     }
   };
   

@@ -51,11 +51,12 @@ let gfs;
 const conn = mongoose.connection;
 conn.once('open', () => {
   gfs = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName: 'fsfiles'
+    bucketName: 'files'
   });
 });
 
 const uploadFile = (req, res) => {
+  console.log('inside upload file',req.file)
   if (!req.file) {
     return res.status(404).json("File not found");
   }
@@ -63,19 +64,42 @@ const uploadFile = (req, res) => {
   const fileUrl = `${url}/uploadedfile/${req.file.filename}`;
   return res.status(200).json(fileUrl);
 };
+// const getFile = async (request, response) => {
+//   try {   
+//     console.log('in',request.params.filemame)
+//       const file = await gfs.files.findOne({ filename: request.params.filename });
+//       // const readStream = gfs.createReadStream(file.filename);
+//       // readStream.pipe(response);
+//       console.log('file name',file)
+//       const readStream = gridfsBucket.openDownloadStream(file._id);
+//       readStream.pipe(response);
+//   } catch (error) {
+//       response.status(500).json({ msg: error.message });
+//   }
+// }
+const { GridFSBucket } = require('mongodb');
 
-const getFile = (req, res) => {
-  const { filename } = req.params;
+const getFile = (request, response) => {
+  const filename = request.params.filename;
 
-  gfs.find({ filename }).toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.status(404).json({ error: 'File not found' });
-    }
+  if (!filename) {
+    return response.status(400).json('Filename is required');
+  }
 
-    const readStream = gfs.openDownloadStreamByName(filename);
-    readStream.pipe(res);
+  const bucket = new GridFSBucket(mongoose.connection.db, {
+    bucketName: 'files', // Replace with the name of your bucket for files
   });
+
+  const downloadStream = bucket.openDownloadStreamByName(filename);
+  downloadStream.on('error', (error) => {
+    console.error('Error retrieving file:', error);
+    response.status(404).json('File not found');
+  });
+
+  downloadStream.pipe(response);
 };
+
+
 
 module.exports = {
   uploadFile,

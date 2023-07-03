@@ -7,7 +7,7 @@ const storage = new GridFsStorage({
   url: `mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority`,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (request, file) => {
-    const match = ["image/png", "image/jpg","application/pdf"];
+    const match = ["image/png", "image/jpg"];
     
 
     if (match.indexOf(file.mimetype) === -1 || match.indexOf(file.mimetype) === 0 )
@@ -21,14 +21,16 @@ const storage = new GridFsStorage({
     
   }
 });
+console.log('hey')
 const storageFiles = new GridFsStorage({    //problem occure here in location of this
   url: `mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority`,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (request, file) => {
+    console.log('inside middleware function value',file.originalname)
     const match = ["application/pdf"];
-    console.log('inner')              //beacuse this not generate name cz file is not defined this part whole not working
-    if (match.indexOf(file.mimetype) === -1)
-      return `${Date.now()}-uploadedfile-${file.originalname}`;
+                 //beacuse this not generate name cz file is not defined this part whole not working
+    if (match.indexOf(file.mimetype) === -1){
+      return `${Date.now()}-uploadedfile-${file.originalname}`;}
 
     return {
       bucketName: "files",
@@ -38,9 +40,9 @@ const storageFiles = new GridFsStorage({    //problem occure here in location of
  
 });
 
-const upload = multer({ storage });
-const uploadfile = multer({ storageFiles });
+const upload = multer({ storage:storage });
+const uploadtutorfile = multer({ storage:storageFiles });
 
 module.exports = {
-  upload,uploadfile
+  upload,uploadtutorfile
 };
