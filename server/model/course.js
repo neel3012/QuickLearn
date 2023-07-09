@@ -27,10 +27,12 @@ const courseSchema = new mongoose.Schema({
     type:String,
     required:false
   },
-  userfile:{
-    type:String,
-    required:false
-  },
+  userfile:
+    {
+      type: String,
+      required: false,
+    }
+  ,
   createdDate: {
       type: Date,
       default: Date.now,

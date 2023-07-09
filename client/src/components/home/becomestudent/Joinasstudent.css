@@ -1,0 +1,9 @@
+.joinstudent{
+    height:90vh;
+    width:100%;
+    background-image:url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1380&t=st=1688768324~exp=1688768924~hmac=de47cb5263bcac3b3f5f8f369691948a79bffc1b1c5d59fb28202f0c06db3ec3');
+}
+.joinstudent .inform{
+  box-shadow: 0px 8px 7px #222;
+ margin-top:6vh
+}

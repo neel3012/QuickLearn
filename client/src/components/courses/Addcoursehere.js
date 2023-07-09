@@ -64,7 +64,7 @@ const Addcoursehere = () => {
     picture: "",
     price:'',
     approximateHours:'',
-    userfile:"",
+    userfile:'',
     createdDate: new Date(),
   };
   
@@ -73,6 +73,7 @@ const Addcoursehere = () => {
   const [filedata,setfiledata]=useState('');
   // const { account } = useContext(DataContext);
   const [validationErrors, setValidationErrors] = useState({});
+  const [loading,setloading]=useState(false)
 
   const url = post?.picture
     ? post?.picture
@@ -97,11 +98,7 @@ const Addcoursehere = () => {
           const imageData = await res.json();
           console.log("image stored", imageData);
 
-          // setPost((prevPost) => ({
-          //   ...prevPost,
-          //   picture: imageData.data,
-          // }));
-          // post.picture = imageData;
+        
           setPost((prevPost) => ({
             ...prevPost,
             picture: imageData,
@@ -118,40 +115,11 @@ const Addcoursehere = () => {
    
 
   
-      // setPost((prevPost) => ({
-      //   ...prevPost,
-      // }));
-  }, [file]);
-  // const getFiles = async () => {
-     
       
-  //   if (filedata) {
-  //     let data1 = new FormData();
-  //     data1.append("file", filedata);
-  //     data1.append("name", filedata.name);
-  //     console.log("value for file in file section", filedata);
-  //     console.log(data1)
-  //     try {
-        
-  //       const res = await fetch("http://localhost:5000/coursefiles/upload", {
-  //         method: "POST",
-  //         body: data1, //finally make changes here
-  //       });
+  }, [file]);
 
-  //       const fileuploadedData = await res.json();
-  //       console.log("file stored", fileuploadedData);
-
-  //       // setPost((prevPost) => ({
-  //       //   ...prevPost,
-  //       //   picture: imageData.data,
-  //       // }));
-  //       post.userfile = fileuploadedData;
-  //     } catch (error) {
-  //       console.error("Error uploading in files", error);
-  //     }
-  //   }
-  // };
   const getFiles = async () => {
+    setloading(true)
     console.log(filedata)
     if (filedata) {
       let data1 = new FormData();
@@ -164,8 +132,12 @@ const Addcoursehere = () => {
           method: "POST",
           body: data1,
         });
-  
+        
         const fileUploadedData = await res.json();
+        setloading(false);
+        if(fileUploadedData){
+          swal("course work addded successfully","success")
+        }
         console.log("file stored", fileUploadedData);
   
         setPost((prevPost) => ({
@@ -180,6 +152,8 @@ const Addcoursehere = () => {
       console.log('file data is undefined')
     }
   };
+  
+  
   
   const handleChange = (e) => {
     setPost({
@@ -240,7 +214,7 @@ const Addcoursehere = () => {
     navigate("/addcourses");
     console.log("front end res", coursedata);
   };
-
+ 
   return (
     <Container>
       <MyPersonal>
@@ -288,14 +262,16 @@ const Addcoursehere = () => {
           placeholder="Approximate Hours"
           className="course_priceinput"
         />
-         <InputTextField
+        <InputTextField
          type="file"
           onChange={(e) => setfiledata(e.target.files[0])}
           name="textfile"
           placeholder="select file to upload"
           className="course_priceinput"
         />
-        
+       
+
+        {loading &&  <div>Uploading...</div>}
         <Button onClick={() => getFiles()} variant="contained" color="primary">Upload</Button>
        
       </div>
@@ -304,3 +280,5 @@ const Addcoursehere = () => {
 };
 
 export default Addcoursehere;
+
+

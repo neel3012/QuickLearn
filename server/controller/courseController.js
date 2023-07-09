@@ -24,3 +24,35 @@ exports.showcourses=async(req,res)=>{
         console.log('eror in showing course data');
     }
 }
+
+exports.getCourseData = async (req, res) => {
+  try {
+    const courseID = req.params.courseID;
+    const course = await Course.findById(courseID);
+    
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+    
+    res.json(course);
+  } catch (error) {
+    console.error('Error getting course data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+exports.getallcourses=async (req, res) => {
+  try {
+    
+    const course = await Course.find({});
+    
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+    
+    res.json(course);
+  } catch (error) {
+    console.error('Error getting course data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

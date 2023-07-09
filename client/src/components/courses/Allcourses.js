@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { sendtutordata } from "../../app/features/tutorReducer";
 
 import "./addcourses.css";
-function Addcourses() {
+import { sendtutordata } from "../../app/features/tutorReducer";
+function Allcourses() {
   const navigate = useNavigate();
   const getalldata = useSelector(sendtutordata);
   const username = getalldata.findusername.username;
@@ -12,14 +12,14 @@ function Addcourses() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchCourseData(username);
+    fetchCourseData();
   }, []);
 
-  const fetchCourseData = async (username) => {
+  const fetchCourseData = async () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:5000/showyourcourses?addedBy=${username}`,
+        `http://localhost:5000/showallcourses`,
         {
           method: "GET",
           headers: {
@@ -36,10 +36,7 @@ function Addcourses() {
     }
   };
 
-  const addNewCourse = (e) => {
-    e.preventDefault();
-    navigate("/addcoursehere");
-  };
+
 
   //aa page ma basically course count karvana and hoi to aene card banai dekHADVA
   //NA HOI TO NO COURSES ADDED BATAVU
@@ -47,10 +44,8 @@ function Addcourses() {
   return (
     <>
       <div className="courses_heading">
-        <h1>welcome {getalldata.findusername.username} to your courses</h1>
-        <button className="course_btn m1" onClick={addNewCourse}>
-          Add New Course
-        </button>
+        <h1>welcome to your Learning </h1>
+       
       </div>
      
       <div className="course_main">
@@ -97,13 +92,9 @@ function Addcourses() {
         )}
       </div>
 
-      {courseData.length > 0 && (
-        <button className="course_btn n" onClick={addNewCourse}>
-          Add New Course
-        </button>
-      )}
+     
     </>
   );
 }
 
-export default Addcourses;
+export default Allcourses;
