@@ -21,6 +21,8 @@ import CourseDetails from './components/courses/CourseDetails';
 import Allcourses from './components/courses/Allcourses';
 import Joinasstudent from './components/home/becomestudent/Joinasstudent';
 import Student from './components/home/becomestudent/Student';
+import SearchResults from './components/SearchResults';
+import VideoPage from './components/VideoPage';
 
 function App() {
    const isTutorAuthenticated = useSelector(checkTutorAuthentication);
@@ -39,6 +41,8 @@ function App() {
          <Route path='/mylearning' element={<Allcourses/>}/>
          {/* <Route path='/addcourses' element={<Addcourses/>}/> */}
          <Route path='/joinasstudent' element={<Joinasstudent/>}/>
+         <Route path="/search" element={<SearchResults />} />
+         <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>
          <Route path="*" element={<NotFound />} />
    </Routes>

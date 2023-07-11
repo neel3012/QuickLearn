@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&family=Roboto+Condensed&display=swap');
+.yt_videos{
+    display: flex;
+    justify-content: space-around;
+    width:80%;
+    margin:auto;
+    height:auto;
+flex-wrap: wrap;
+padding:10px
+}
+.yt_video{
+    height:50vh;
+    width:300px
+    ;background-color: #fefefe;
+    box-shadow: 5px 7px 4px 1px grey;
+    border-radius: 20px;
+   margin:30px 0;
+   cursor: pointer;
+}
+.yt_img{
+    width:100%;
+    height:25vh;
+    
+}
+.yt_img img{
+    object-fit: cover;
+     width:100%;
+     height: 100%;
+     border-radius: 20px 20px 0px 0;
+}
+.yt_nameandlogo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+    height:10vh;
+    justify-content: space-around;
+    padding: 20px;
+}
+.yt_description{
+    width:100%;
+    padding:0 20px ;
+}
+
+.yt_header{
+    text-transform: capitalize;
+    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    height:15vh;
+    display: flex;
+    align-items: center;
+   flex-direction: column;
+    justify-content: center;
+
+}
+.yt_hour{
+    margin-top: 10px;
+    font-weight: bold;
+    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    color:orangered
+
+    
+}
+.yt_header h1 span{
+   color:orangered
+}
+.yt_nameandlogo div{
+    font-weight: bold;
+    margin-right:5px ;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.video_main iframe{
+    width:70%;
+    height:70vh;
+    margin:auto;
+}
+.video_main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.video_main iframe{
+    width:100%;
+    margin:30px 0
+}
+.main_videosec{
+    width:80%;
+    height: auto;
+    margin:auto;;
+}
+.main_videosec h1{
+    text-align: center;
+    padding:20px 0;  font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Condensed', sans-serif;
+}
