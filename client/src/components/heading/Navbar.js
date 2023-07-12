@@ -147,6 +147,7 @@ import { addtutordata, sendtutordata } from '../../app/features/tutorReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import { sendStudentdata } from '../../app/features/studentReducer';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -186,6 +187,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 
 const Navbar = () => {
   const getalldata = useSelector(sendtutordata);  //this data come from redux store about tutor...
+  const getstudentdata=useSelector(sendStudentdata);
   // const {username}=getalldata?.findusername;
   const navigate=useNavigate();
   const dispatch=useDispatch();
@@ -203,6 +205,7 @@ const Navbar = () => {
   });
   
   navigate('/')
+  window.location.reload()
 
   }
   const [searchQuery, setSearchQuery] = useState('');
@@ -212,6 +215,7 @@ const Navbar = () => {
     console.log(searchQuery)
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
   };
+  const loggedInUser = getalldata.findusername || getstudentdata.findusername;
   return (
     <>
      <div className='navbar'>
@@ -259,7 +263,7 @@ const Navbar = () => {
         variant="dot"
        
       >
-        <Avatar alt={getalldata?.findusername?.username? getalldata?.findusername?.username : "U"} onClick={logoutfun}   sx={{ bgcolor: deepOrange[500] }} src="http://graph.facebook.com/{user-id}/picture?type=large" style={{textTransform:"capitalize",cursor:"pointer"}} />
+        <Avatar alt={loggedInUser?.username || 'U'} onClick={logoutfun}   sx={{ bgcolor: deepOrange[500] }} src="http://graph.facebook.com/{user-id}/picture?type=large" style={{textTransform:"capitalize",cursor:"pointer"}} />
       </StyledBadge>
            </Link>
         </div>

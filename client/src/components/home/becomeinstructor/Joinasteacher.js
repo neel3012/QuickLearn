@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import swal from 'sweetalert'
 import axios from 'axios';
 import { addtutordata, isTutorAuthenticated } from '../../../app/features/tutorReducer';
+import { isStudentnotAuthenticated } from '../../../app/features/studentReducer';
 function Joinasteacher() {
     const [showSignIn, setShowSignIn] = useState(false);
     const [email, setEmail] = useState("");
@@ -116,6 +117,7 @@ function Joinasteacher() {
     if(logintutdata.status===422 ||logintutdata.status===400 || !logintutdata ||logintutdata.msg){
       // window.alert()
       swal(logintutdata.msg,"please provide right credetials...","info");
+      dispatch(isStudentnotAuthenticated(res.data));
     }
     else{
       window.alert('login successfull...')

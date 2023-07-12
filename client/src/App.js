@@ -23,9 +23,12 @@ import Joinasstudent from './components/home/becomestudent/Joinasstudent';
 import Student from './components/home/becomestudent/Student';
 import SearchResults from './components/SearchResults';
 import VideoPage from './components/VideoPage';
+import { checkStudentAuthentication } from './app/features/studentReducer';
+import Availablecourses from './components/home/becomestudent/Availablecourses';
 
 function App() {
    const isTutorAuthenticated = useSelector(checkTutorAuthentication);
+   const isStudentAuthenticated=useSelector(checkStudentAuthentication);
   //if not possible then change name of tutor
   return (
     <>
@@ -41,6 +44,9 @@ function App() {
          <Route path='/mylearning' element={<Allcourses/>}/>
          {/* <Route path='/addcourses' element={<Addcourses/>}/> */}
          <Route path='/joinasstudent' element={<Joinasstudent/>}/>
+
+        {isStudentAuthenticated && (<Route path='/showavailablecourses'element={<Availablecourses/>}/>)}
+
          <Route path="/search" element={<SearchResults />} />
          <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>

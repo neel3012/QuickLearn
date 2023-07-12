@@ -18,6 +18,18 @@ padding:10px
    margin:30px 0;
    cursor: pointer;
 }
+.coursein_video:hover{
+ background-color: #f3efef
+}
+.coursein_video{
+    height:55vh;
+    width:300px
+    ;background-color: #fefefe;
+    box-shadow: 5px 7px 4px 1px grey;
+    border-radius: 20px;
+   margin:30px 0;
+   cursor: pointer;
+}
 .yt_img{
     width:100%;
     height:25vh;
@@ -35,12 +47,16 @@ padding:10px
     align-items: center;
     
     height:10vh;
-    justify-content: space-around;
+    
     padding: 20px;
 }
 .yt_description{
     width:100%;
     padding:0 20px ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .yt_header{
@@ -95,4 +111,11 @@ padding:10px
     text-align: center;
     padding:20px 0;  font-family: 'Playfair Display', serif;
     font-family: 'Roboto Condensed', sans-serif;
+}
+.yt_mainprice{
+    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin:20px;
+    padding: 10px;
+    background-color:#28282b;color:white
 }

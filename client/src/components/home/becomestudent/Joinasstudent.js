@@ -6,6 +6,7 @@ import {  useDispatch } from 'react-redux'
 import './Joinasstudent.css'
 import swal from 'sweetalert'
 import { addtutordata, isTutorAuthenticated } from '../../../app/features/tutorReducer';
+import { addstudentdata, isStudentAuthenticated } from '../../../app/features/studentReducer';
 function Joinasstudent() {
     const [showSignIn, setShowSignIn] = useState(false);
     const [email, setEmail] = useState("");
@@ -78,11 +79,11 @@ function Joinasstudent() {
           setEmail('');
         setPassword('');
         
-        // dispatch(isTutorAuthenticated(res.data)); // Pass the token data as the payload
-        //     dispatch(addtutordata(logintutdata)); 
-            setTutorinndata(res.data);
+        dispatch(isStudentAuthenticated(res.data)); // Pass the token data as the payload
+            dispatch(addstudentdata(studentdata)); 
+            // setTutorinndata(res.data);
         
-        navigate('/addcourses');
+        navigate('/showavailablecourses');
         }
     
         

@@ -7,7 +7,7 @@ import { sendtutordata } from "../../app/features/tutorReducer";
 function Allcourses() {
   const navigate = useNavigate();
   const getalldata = useSelector(sendtutordata);
-  const username = getalldata.findusername.username;
+  // const username = getalldata.findusername.username;
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
