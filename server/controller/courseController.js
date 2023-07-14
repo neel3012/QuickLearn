@@ -56,3 +56,20 @@ exports.getallcourses=async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+exports.showcoursesfordetail=async(req,res)=>{
+  try {
+    const {_id} = req.query;
+   
+    const course = await Course.findById(_id);
+    
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+    
+    res.status(200).json(course);
+  } catch (error) {
+    console.error('Error getting course data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}

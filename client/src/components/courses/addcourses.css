@@ -1,103 +1,6 @@
-/* .course_inner{
-    width:70%;
-    margin: auto;
-    display: flex;
-    overflow-x: hidden;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease, padding 0.3s ease;
-}
-.course_inner:hover{
-    background-color: #f0f0f0;
-    padding: 20px;
-}
-.course_left{
-    flex: 0.8;
-    display: flex;
-}
-.course_right{
-   display: flex;
 
-}
-.course_right1{
-    width:80%;
-    margin:auto
-}
-.course_img{
-    width: 250px;;
-    background-color: red;
-    height: 150px;
-    object-fit: fill;
-}
-.course_right2{
-    width:10%;
-    margin:auto;
-    
-}
-.course_authorname{
-    font-weight: bold;
-}
-.course_line{
-    
-        height: 1px;
-        width: 80%;
-        margin: 0 auto;
-        background-color: gray;
- margin-bottom: 20px;
- margin-top:20px;
-      
-}
-.course_btn{
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    border: 2px solid #ff6b6b;
-    border-radius: 5px;
-    background-color: #ff6b6b;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-}
-.course_btn:hover {
-    background-color: #ff4d4d;
-  }
-  
-  .course_btn:focus {
-    outline: none;
-  }
-  
-  .course_btn:active {
-    transform: translateY(1px);
-  }
-  .n1{
-    margin:10px 0;
-  }
-  .courses_heading{
-    height: 20vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .m1{
-    margin-left: 20px;
-  }
-  .courses_heading h1{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 300;
-  }
-  .course_mainname{
-    font-weight: 500;
-  }
-  .n{
-    display: flex;
-    align-items: center;
-  } */
+  @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Roboto+Condensed&display=swap');
 
   .course_inner{
     width:80%;
@@ -220,4 +123,61 @@
   
 .no_courses_added p {
   color: #28282b; /* Set the text color to ensure visibility */
+}
+.view_description_n1{
+  display: flex;
+  align-items: center;
+  width:80%;
+  margin:30px auto;
+  font-family: 'Lilita One', cursive;
+  font-family: 'Roboto Condensed', sans-serif;
+  line-height: 1.5rem;
+  font-size: 18px;
+  padding:20px;
+  background-color: #fbf7f7;
+  border-radius: 30px;
+color:#28282b
+}
+.avail_pricesection{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height:50vh;
+  margin: 20px;
+}
+.avail_pricesection div{
+  
+  margin:20px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.avail_inn{
+  /* color:rgb(212, 104, 212); */
+  color:rgb(165, 57, 165);
+  font-family: 'Lilita One', cursive;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 40px;;
+  margin-top:40px;
+
+}
+.avail_innn{
+  color: #28282b;
+  font-size: 20px;
+
+
+}
+.lock_icon{
+  font-size:inherit!important;
+  margin:0 4px;
+}
+.avail_maininbutton{
+  margin:30px;
+  padding:10px 40px!important;
+  font-family: 'Lilita One', cursive;
+  background-color:rgb(165, 57, 165)!important;
+
+}
+.p_avail{
+  margin:30px 0
 }

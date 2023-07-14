@@ -5,9 +5,11 @@
     justify-content: space-around;
     width:80%;
     margin:auto;
-    height:auto;
+padding:10px;    height:auto;
 flex-wrap: wrap;
-padding:10px
+border-radius: 20px;
+margin-bottom: 20px;
+
 }
 .yt_video{
     height:50vh;
