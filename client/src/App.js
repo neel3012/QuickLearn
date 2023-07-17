@@ -25,10 +25,9 @@ import SearchResults from './components/SearchResults';
 import VideoPage from './components/VideoPage';
 import { checkStudentAuthentication } from './app/features/studentReducer';
 import Availablecourses from './components/home/becomestudent/Availablecourses';
-import Paymentsuccess from './components/payment/Paymentsuccess';
-import Payment from './components/payment/Payment';
 import Becometeacher from './components/home/becomeinstructor/Becometeacher';
 import Availablecoursesbyid from './components/courses/Availablecoursesbyid';
+import PurchasedCourses from './components/payment/PurchasedCourses';
 
 function App() {
    const isTutorAuthenticated = useSelector(checkTutorAuthentication);
@@ -51,10 +50,9 @@ function App() {
           
         {isStudentAuthenticated && (<Route path='/showavailablecourses' element={<Availablecourses/>}/>)}
         {isStudentAuthenticated && (<Route path='/showcoursebyidforstudent/:courseID' element={<Availablecoursesbyid/>}/>)}
-
-        {/* <Route path='/payment' element={<Payment/>}/>
-        <Route path='/payment-success' element={Paymentsuccess}/> */}
-
+        
+        <Route path='/purchasedCourses' element={<PurchasedCourses/>}/>
+        
          <Route path="/search" element={<SearchResults />} />
          <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>

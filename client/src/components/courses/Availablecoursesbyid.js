@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { sendtutordata } from '../../app/features/tutorReducer';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
@@ -7,12 +7,12 @@ import './addcourses.css'
 import LockIcon from '@mui/icons-material/Lock';
 import StripeCheckout from 'react-stripe-checkout';
 
-import shop from '../../assets/shop.png'
 import { sendStudentdata } from '../../app/features/studentReducer';
 //this page is main
 //because i want to make user to see pdf available here after the payment done and also 
 //related videos section undwr the main part
 function Availablecoursesbyid() {
+  const navigate=useNavigate();
   const [isPaymentSuccessful, setPaymentSuccessful] = useState(false);
   const studeentdata=useSelector(sendStudentdata)
   console.log(studeentdata)
@@ -71,17 +71,14 @@ function Availablecoursesbyid() {
       console.log(error);
     }
   };
-
+ 
   return (
     <>
      {isPaymentSuccessful ? (
-      <div>
-        <h1>Payment Successful!</h1>
-        <p>Thank you for purchasing the course.</p>
-        {/* Render additional content, such as PDFs and related videos */}
-      </div>
+      navigate('/purchasedCourses')
     ) : (
      <div className="view_main">
+       
       <div className="view_imagesection">
         <img
           src={courseData?.picture}
@@ -111,7 +108,7 @@ function Availablecoursesbyid() {
             currency="CAD"
             name="QuickLearn Tutoring"
             description={`Payment for ${courseData.title}`}
-            panelLabel="Buy This Course"
+            panelLabel="Buy Now"
             email={studeentdata.findusername.email}
             billingAddress={false}
             shippingAddress={false}

@@ -1,4 +1,5 @@
 const Course = require("../model/course.js");
+const Payment = require("../model/payment.js");
 
 exports.addnewcoursehere = async (req, res) => {
     try {
@@ -71,5 +72,20 @@ exports.showcoursesfordetail=async(req,res)=>{
   } catch (error) {
     console.error('Error getting course data:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+exports.findpurchasedcoursebyid=async (req, res) => {
+  try {
+    const courseIDs = await Payment.distinct('courseID');
+
+    if (!courseIDs || courseIDs.length === 0) {
+      return res.status(404).json({ error: 'No courses for you...' });
+    }
+
+    res.json(courseIDs);
+  } catch (error) {
+    console.error('Error getting courseIDs:', error);
+    res.status(500).json({ error: 'Internal server error in getting purchase courses' });
   }
 }
