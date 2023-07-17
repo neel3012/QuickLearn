@@ -23,6 +23,6 @@
     "multer-gridfs-storage": "^5.0.2",
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
-    "stripe": "^12.12.0"
+    "stripe": "^12.13.0"
   }
 }

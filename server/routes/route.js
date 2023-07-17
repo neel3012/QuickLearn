@@ -7,23 +7,40 @@ const { uploadImage, getImage } = require('../controller/image-controller.js');
 const {upload, uploadtutorfile} = require('../utils/upload.js');
 const { uploadFile, getFile } = require('../controller/file-controller.js');
 const { registerstudent, loggedstudentinn } = require('../controller/studentController.js');
-router.post('/create-payment-intent', async (req, res) => {
-    try {
-      const { courseId, amount } = req.body;
-  
-      // Create a payment intent using the Stripe API
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency: 'usd',
-        description: `Payment for Course ${courseId}`,
-      });
-  
-      res.status(200).json({ clientSecret: paymentIntent.client_secret });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred while creating the payment intent' });
+const Payment = require('../model/payment.js');
+
+router.post('/process-payment', async (req, res) => {
+  try {
+    const { amount, token, courseID,studentName } = req.body;
+    console.log( amount, token, courseID,studentName )
+    // Create a charge using the Stripe API
+    const charge = await stripe.charges.create({
+      amount: amount,
+      currency: 'cad',
+      description: 'Payment for Course',
+      source: token,
+    });
+    if(charge){
+      const paymentinfo = {  token, courseID,studentName };
+      const payment = new Payment(paymentinfo);
+      await payment.save();
+      return res.status(200).json({ message: 'Payment successful' });
     }
-  });
+    else{
+      return res.status(200).json({ message: 'Additional actions required..' });
+    }
+
+    // Handle the successful payment response
+    // Send a success message or perform any additional actions
+
+    
+  } catch (error) {
+    // Handle any errors that occurred during payment processing
+    // Send an error response back to the front-end
+    console.log(error);
+    res.status(500).json({ error: 'Payment processing failed' });
+  }
+});
 
 router.post('/joinasteacher', registerTutor);
 router.post('/teacherlogin',loginteacher)
