@@ -247,7 +247,7 @@ const Navbar = () => {
 
 
         <div className='navbar_ending'>
-            <NavLink to='/mylearning' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>My Learning</NavLink>
+            <NavLink to='/purchasedCourses' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>My Learning</NavLink>
             <NavLink to='/learning' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>Instructor</NavLink>
            <Link to='/cart'>
            <IconButton>

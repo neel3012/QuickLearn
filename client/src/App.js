@@ -28,6 +28,7 @@ import Availablecourses from './components/home/becomestudent/Availablecourses';
 import Becometeacher from './components/home/becomeinstructor/Becometeacher';
 import Availablecoursesbyid from './components/courses/Availablecoursesbyid';
 import PurchasedCourses from './components/payment/PurchasedCourses';
+import Authorizematerial from './components/courses/Authorizematerial';
 
 function App() {
    const isTutorAuthenticated = useSelector(checkTutorAuthentication);
@@ -52,7 +53,7 @@ function App() {
         {isStudentAuthenticated && (<Route path='/showcoursebyidforstudent/:courseID' element={<Availablecoursesbyid/>}/>)}
         
         <Route path='/purchasedCourses' element={<PurchasedCourses/>}/>
-        
+        <Route path='authorize/access/:courseID' element={<Authorizematerial/>}/>
          <Route path="/search" element={<SearchResults />} />
          <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>

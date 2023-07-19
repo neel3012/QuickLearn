@@ -65,12 +65,15 @@ margin-bottom: 20px;
     text-transform: capitalize;
     font-family: 'Playfair Display', serif;
     font-family: 'Roboto Condensed', sans-serif;
-    height:15vh;
+    height:20vh;
     display: flex;
     align-items: center;
    flex-direction: column;
     justify-content: center;
 
+}
+.yt_header TextField{
+    margin:20px!important;
 }
 .yt_hour{
     margin-top: 10px;
