@@ -1,5 +1,6 @@
 const grid = require('gridfs-stream');
 const mongoose = require('mongoose');
+ // By default, it will connect to localhost:6379
 
 const url = 'http://localhost:5000';
 
@@ -25,6 +26,7 @@ conn.once('open', () => {
     response.status(200).json(imageUrl);    
 }
 
+
  const getImage = async (request, response) => {
     try {   
         const file = await gfs.files.findOne({ filename: request.params.filename });
@@ -37,6 +39,8 @@ conn.once('open', () => {
         response.status(500).json({ msg: error.message });
     }
 }
+
+  
 module.exports = {
     uploadImage,
     getImage
