@@ -4,10 +4,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { sendtutordata } from "../../app/features/tutorReducer";
 
 import "./addcourses.css";
+import Loader from "../Loader";
 function Addcourses() {
   const navigate = useNavigate();
   const getalldata = useSelector(sendtutordata);
   const username = getalldata.findusername.username;
+  console.log('name of user',username)
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,7 +57,7 @@ function Addcourses() {
      
       <div className="course_main">
         {isLoading ? (
-          <div className="loader">Loading...</div>
+            <Loader />
         ) : courseData.length > 0 ? (
           courseData.map((course, index) => (
             <NavLink key={index} to={`/courseinfo/${course._id}`} style={{color:"inherit",textDecoration:"none"}}>

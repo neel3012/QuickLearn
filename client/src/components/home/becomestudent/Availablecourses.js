@@ -28,6 +28,7 @@ const Availablecourses = () => {
         },
       });
       const data = await response.json();
+      console.log('inner data',data)
       setCourseData(data);
     } catch (error) {
       console.log(error);
@@ -57,7 +58,7 @@ const Availablecourses = () => {
       </div>
 
       <div className="yt_videos">
-        {courseData.map((data) => {
+        {courseData?.map((data) => {
           // Filter courses based on the search query
           if (!data.title.toLowerCase().includes(searchQuery.toLowerCase())) {
             return null // Return null to hide courses that don't match the search query

@@ -63,6 +63,7 @@ const Addcoursehere = () => {
     description: "",
     picture: "",
     price:'',
+    drive:'',
     approximateHours:'',
     userfile:'',
     createdDate: new Date(),
@@ -203,7 +204,7 @@ const Addcoursehere = () => {
       return;
     }
     
-    console.log("post data before sned", post);
+    console.log("post data before sned", post); //done
     const res = await fetch("http://localhost:5000/addnewcourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -250,6 +251,12 @@ const Addcoursehere = () => {
         onChange={(e) => handleChange(e)}
       />
      <div className="addcourses_main">
+     <InputTextField
+          onChange={(e) => handleChange(e)}
+          name="drive"
+          placeholder="Drive Link"
+          className="course_priceinput"
+        />
         <InputTextField
           onChange={(e) => handleChange(e)}
           name="price"
