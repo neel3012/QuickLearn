@@ -184,3 +184,9 @@ color:#28282b
 .checkout_upgraded{
   width:100px!important;
 }
+.n11{
+  display: flex;
+  align-items: center;
+  width:100%;
+  justify-content: center;
+}

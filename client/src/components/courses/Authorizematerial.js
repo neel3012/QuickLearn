@@ -1,157 +1,4 @@
-// import React, { useEffect, useState } from 'react'
-// import { useSelector } from 'react-redux';
-// import { Link, useNavigate, useParams } from 'react-router-dom';
-// import { sendtutordata } from '../../app/features/tutorReducer';
-// import { Avatar } from '@mui/material';
-// import './authorize.css'
-// function Authorizematerial() {
-//     const { courseID } = useParams();
-//     const [courseData, setCourseData] = useState({});
-//     const [videos, setVideos] = useState([]);
 
-//     const navigate=useNavigate();
-//     useEffect(() => {
-//       if (courseData?.title) {
-//         fetchVideos(courseData?.title);
-//       }
-//     }, [courseData?.title]);
-  
-//     const fetchVideos = async (searchQuery) => {
-//       try {
-//         const response = await fetch(
-//           `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(courseData?.title)}&part=snippet&type=video&&maxResults=6&key=AIzaSyBGl7SCCjcqhc-ukJuFjbkP3OIFnOwuvRQ`
-//         );
-//         console.log(response)
-  
-//         if (response.ok) {
-//           const data = await response.json();
-//           setVideos(data.items);
-//         }
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//      const handleClick=(e)=>{
-      
-//       navigate(`/video/${e.id.videoId}`)
-//      }
-
-//     const getCourseData = async () => {
-//         try {
-//           const response = await fetch(
-//             `http://localhost:5000/courseinfo/${courseID}`,
-//             {
-//               method: "GET",
-//               headers: {
-//                 "Content-Type": "application/json",
-//               },
-//             }
-//           );
-//           const cdata = await response.json();
-//           setCourseData(cdata);
-//         } catch (err) {
-//           console.log(err);
-//         }
-//       };
-    
-//       useEffect(() => {
-//         getCourseData();
-//       }, [courseID]);
-    
-//   return (
-//    <>
-//     <div className="view_main">
-//       <div className="view_imagesection">
-//         <img
-//           src={courseData?.picture}
-//           className="view_mainimage"
-//           alt="courseImage"
-//         />
-//       </div>
-//       <div className="view_mainbody">
-//         <div className="view_head">
-//           <h1>{courseData?.title}</h1>
-//           <p>Author: {courseData?.addedBy}</p>
-//         </div>
-//         <div className="view_description">⚪ {courseData.description}</div>
-//        <h3 className='view_hoursetting'>It will take your <span className='view_hours'>{courseData.approximateHours}</span> Hours to finish!</h3>
-
-
-//        <div className="yt_header">
-//         <h1>
-//           excess Premium <span>Material</span> and Related<span> Videos.</span>
-//         </h1>
-//         <p>Scroll Down To Access Or <span>Download</span>!</p>
-//         {/* Search bar */}
-       
-//       </div>
-//         <div className="view_pdfsetting">
-//         <object
-//           data={courseData?.userfile}
-//           type="application/pdf"
-         
-//           className="view_object"
-          
-//         >
-//           <p>
-//             Alternative text - include a link{" "}
-//             <a href={courseData?.userfile}>to the PDF!</a>
-//           </p>
-//         </object>
-//         </div>
-
-
-//         <div>
-//         {/* Add "link-style" class to make it look like a link */}
-//         Drive Access for extra material:{' '}
-//         <a target="_blank" href={courseData?.drive} className="link-style">
-//           {courseData?.drive}
-//         </a>
-//       </div>
-//         <div className='related_videos_authorize'>
-//              <div className="yt_header">
-//              <h1>
-//                  excess related <span>Open-source Videos</span> and <span>Learn</span>
-//             </h1>
-//         {/* Search bar */}
-       
-//              </div>
-
-//              <div className='yt_videos'>
-//          {videos.map((video) => (
-            
-   
-//     <div className='yt_video' key={video.id.videoId} onClick={()=>handleClick(video)}>
-//        {console.log(video)}
-//                <div className='yt_img'>
-//            <img src={video.snippet.thumbnails.high.url} alt='course_img'/>
-//                 </div>
-//                 <div className='yt_nameandlogo'>
-//                    <Avatar/>
-//                     <div>{video.snippet.title.lenght>30 ?  video.snippet.title.slice(0,30): video.snippet.title.slice(0,30).concat('...')}</div>
-//                 </div>
-//             <div className='yt_description'>
-//                    <p>{video.snippet.description.slice(0, 50)}...</p> 
-//                    <p className='yt_hour'>{video.snippet.channelTitle}
-// </p>
-//                 </div>
-//             </div>
-//       ))}
-//     </div>
-
-
-
-//         </div>
-
-        
-//       </div>
-//     </div>
-
-//    </>
-//   )
-// }
-
-// export default Authorizematerial
 
 
 import React, { useEffect, useState } from 'react';
@@ -161,8 +8,9 @@ import { Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton } from '
 import CloseIcon from '@mui/icons-material/Close';
 import './authorize.css'
 import drive from '../../assets/drive.png'
-import yt from '../../assets/yt.png'
+import yt from '../../assets/yt (2).png'
 import { deepOrange } from '@mui/material/colors';
+import axios from 'axios';
 function Authorizematerial() {
   const { courseID } = useParams();
   const [courseData, setCourseData] = useState({});
@@ -170,12 +18,44 @@ function Authorizematerial() {
   const [showPdfModal, setShowPdfModal] = useState(false);
   const [showDriveModal, setShowDriveModal] = useState(false);
   const navigate = useNavigate();
-
+  console.log('in is',courseData?.title)
+  const options = {
+    method: 'GET',
+    url: 'https://bing-news-search1.p.rapidapi.com/news/search',
+    params: {
+      q:courseData?.title ,
+      freshness: 'Day',
+      textFormat: 'Raw',
+      safeSearch: 'Off'
+    },
+    headers: {
+      'X-BingApis-SDK': 'true',
+      'X-RapidAPI-Key': '8fc89b5015msh9857b7ea4d7c94cp1dd817jsn7ef6e163ce83',
+      'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
+    }
+  };
   useEffect(() => {
     if (courseData?.title) {
       fetchVideos(courseData?.title);
     }
   }, [courseData?.title]);
+  useEffect(() => {
+    getCourseData();
+  }, [courseID]);
+
+  useEffect(() => {
+    getNewsData();
+  }, []);
+
+  
+  const getNewsData=async ()=>{
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const fetchVideos = async (searchQuery) => {
     try {
@@ -212,10 +92,7 @@ function Authorizematerial() {
     }
   };
 
-  useEffect(() => {
-    getCourseData();
-  }, [courseID]);
-
+ 
   
 
   const handleDriveModalOpen = () => {
@@ -348,6 +225,10 @@ function Authorizematerial() {
           </a>
         </DialogContent>
       </Dialog>
+
+      <section className='auth_news'>
+            
+      </section>
     </>
   );
 }

@@ -100,7 +100,7 @@ function Addcourses() {
       </div>
 
       {courseData.length > 0 && (
-        <button className="course_btn n" onClick={addNewCourse}>
+        <button className="course_btn n n11" onClick={addNewCourse}>
           Add New Course
         </button>
       )}

@@ -15,44 +15,44 @@ exports.addnewcoursehere = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while adding the course' });
     }
   };
-// exports.showcourses=async(req,res)=>{
-//     try{
-//         const {addedBy}=req.query;
-//         const courses = await Course.find({ addedBy }).sort({ createdDate: -1 });
-//         // const courses=await Course.find({addedBy});
-//         res.status(200).json(courses);
+exports.showcourses=async(req,res)=>{
+    try{
+        const {addedBy}=req.query;
+        const courses = await Course.find({ addedBy }).sort({ createdDate: -1 });
+        // const courses=await Course.find({addedBy});
+        res.status(200).json(courses);
         
-//     }
-//     catch(err){
-//         return res.status(404).json({"msg":"error occure in showing courses page"})
-//         console.log('eror in showing course data');
-//     }
-// }
-exports.showcourses = async (req, res) => {
-  try {
-    const { addedBy } = req.query;
-    console.log('USER IN BACK',addedBy)
-    // Check if the course data exists in the Redis cache
-    const cachedCourses = await redisClient.get(`courses:addedBy:${addedBy}`);
-    // console.log('cached data is',cachedCourses);
-    if (cachedCourses) {
-      const courses = JSON.parse(cachedCourses);
-      console.log('cached data',courses);
-      return res.status(200).json(courses);
     }
+    catch(err){
+        return res.status(404).json({"msg":"error occure in showing courses page"})
+        console.log('eror in showing course data');
+    }
+}
+// exports.showcourses = async (req, res) => {
+//   try {
+//     const { addedBy } = req.query;
+//     console.log('USER IN BACK',addedBy)
+//     // Check if the course data exists in the Redis cache
+//     const cachedCourses = await redisClient.get(`courses:addedBy:${addedBy}`);
+//     // console.log('cached data is',cachedCourses);
+//     if (cachedCourses) {
+//       const courses = JSON.parse(cachedCourses);
+//       console.log('cached data',courses);
+//       return res.status(200).json(courses);
+//     }
 
-    // If the data is not in the cache, fetch it from the database
-    const courses = await Course.find({ addedBy }).sort({ createdDate: -1 });
+//     // If the data is not in the cache, fetch it from the database
+//     const courses = await Course.find({ addedBy }).sort({ createdDate: -1 });
 
-    // Cache the fetched data in Redis with an expiration time (e.g., 1 hour)
-    await redisClient.set(`courses:addedBy:${addedBy}`, JSON.stringify(courses), 'EX', 3600);
+//     // Cache the fetched data in Redis with an expiration time (e.g., 1 hour)
+//     await redisClient.set(`courses:addedBy:${addedBy}`, JSON.stringify(courses), 'EX', 3600);
 
-    res.status(200).json(courses);
-  } catch (err) {
-    console.error('Error in showing course data:', err);
-    return res.status(404).json({ msg: 'Error occurred in showing courses page' });
-  }
-};
+//     res.status(200).json(courses);
+//   } catch (err) {
+//     console.error('Error in showing course data:', err);
+//     return res.status(404).json({ msg: 'Error occurred in showing courses page' });
+//   }
+// };
 
 exports.getCourseData = async (req, res) => {
   try {
@@ -97,22 +97,43 @@ exports.getCourseData = async (req, res) => {
 //   }
 // };
 
-
-exports.getallcourses=async (req, res) => {
+exports.getallcourses = async (req, res) => {
   try {
-    
-    const course = await Course.find({});
-    
-    if (!course) {
+    const studentName = req.query.studentName; // Assuming the frontend will pass the student's name as a query parameter
+
+    const allCourses = await Course.find({});
+    if (!allCourses) {
       return res.status(404).json({ error: 'Course not found' });
     }
-    
-    res.json(course);
+
+    // Get the list of course IDs purchased by the student
+    const purchasedCourses = await Payment.find({ studentName }).distinct('courseID');
+
+    // Filter out the purchased courses from the allCourses array
+    const filteredCourses = allCourses.filter((course) => !purchasedCourses.includes(course._id.toString()));
+
+    res.json(filteredCourses);
   } catch (error) {
     console.error('Error getting course data:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+// exports.getallcourses=async (req, res) => {
+//   try {
+    
+//     const course = await Course.find({});
+    
+//     if (!course) {
+//       return res.status(404).json({ error: 'Course not found' });
+//     }
+    
+//     res.json(course);
+//   } catch (error) {
+//     console.error('Error getting course data:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
 // exports.getallcourses = async (req, res) => {
 //   try {
 //     // Check if all course data exists in the Redis cache
@@ -157,26 +178,51 @@ exports.showcoursesfordetail=async(req,res)=>{
   }
 }
 
-exports.findpurchasedcoursebyid=async (req, res) => {
+exports.findpurchasedcoursebyid = async (req, res) => {
   try {
     const username = req.header('User-Name');
-    // const courseIDs = await Payment.distinct('courseID');
-
     const purchasedCourses = await Payment.find({ studentName: username }).select('courseID');
 
-    // Extract the courseIDs from the purchased courses.
     const courseIDs = purchasedCourses.map((course) => course.courseID);
 
     if (!courseIDs || courseIDs.length === 0) {
       return res.status(204).json({ error: 'No courses for you...' });
     }
 
-    res.json(courseIDs);
+    // Check if the course IDs exist in the Course dataset
+    const existingCourses = await Course.find({ _id: { $in: courseIDs } }).select('_id');
+
+    // Extract the courseIDs of existing courses
+    const existingCourseIDs = existingCourses.map((course) => course._id);
+
+    // Return only the course IDs of existing courses
+    res.json(existingCourseIDs);
   } catch (error) {
     console.error('Error getting courseIDs:', error);
     res.status(500).json({ error: 'Internal server error in getting purchase courses' });
   }
-}
+};
+
+// exports.findpurchasedcoursebyid=async (req, res) => {
+//   try {
+//     const username = req.header('User-Name');
+//     // const courseIDs = await Payment.distinct('courseID');
+
+//     const purchasedCourses = await Payment.find({ studentName: username }).select('courseID');
+
+//     // Extract the courseIDs from the purchased courses.
+//     const courseIDs = purchasedCourses.map((course) => course.courseID);
+
+//     if (!courseIDs || courseIDs.length === 0) {
+//       return res.status(204).json({ error: 'No courses for you...' });
+//     }
+
+//     res.json(courseIDs);
+//   } catch (error) {
+//     console.error('Error getting courseIDs:', error);
+//     res.status(500).json({ error: 'Internal server error in getting purchase courses' });
+//   }
+// }
 // exports.findpurchasedcoursebyid = async (req, res) => {
 //   try {
 //     // Check if course IDs are available in the Redis cache
@@ -208,3 +254,25 @@ exports.findpurchasedcoursebyid=async (req, res) => {
 //     res.status(500).json({ error: 'Internal server error in getting purchase courses' });
 //   }
 // };
+
+exports.deletecourse = async (req, res) => {
+  try {
+    const getid = req.params.courseID;
+    console.log('id for delete', getid);
+    const coursefind = await Course.findById(getid);
+
+    if (!coursefind) {
+      // Course with the given ID doesn't exist
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    // Course found, now perform the deletion
+    await Course.findByIdAndDelete(getid);
+
+    console.log('Course deleted successfully');
+    return res.status(200).json({ message: 'Course deleted successfully' });
+  } catch (error) {
+    console.log('Error deleting course:', error);
+    return res.status(500).json({ error: 'Error deleting course' });
+  }
+};

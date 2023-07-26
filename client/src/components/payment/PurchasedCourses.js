@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import '../searchresult.css';
+import Loader from '../Loader';
 
 function PurchasedCourses() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function PurchasedCourses() {
 
   const fetchCourseData = async () => {
     try {
-      setLoading(false);
+      setLoading(true);
 
       const response = await fetch('http://localhost:5000/findpurchasedcoursebyid', {
         method: 'GET',
@@ -49,6 +50,7 @@ function PurchasedCourses() {
 
   const fetchIndividualPurchaseData = async (dataIds) => {
     try {
+      setLoading(true);
       const purchasePromises = dataIds.map(async (dataId) => {
         const response = await fetch(`http://localhost:5000/findbyidandshow?_id=${dataId}`, {
           method: 'GET',
@@ -62,8 +64,10 @@ function PurchasedCourses() {
       const purchaseData = await Promise.all(purchasePromises);
       console.log('trans purchase',purchaseData)
       setPurchase(purchaseData);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -81,9 +85,7 @@ function PurchasedCourses() {
     <>
       {isStudentStillPresent ? (
       loading ? (
-        <div className="loader-container">
-          <CircularProgress size={50} />
-        </div>
+        <Loader/>
       ) : (
         <>
           {purchase.length > 0 && (
@@ -92,7 +94,7 @@ function PurchasedCourses() {
                 <h1>
                   Welcome To <span>Premium</span> Portal
                 </h1>
-                <p>Explore and happy learning lifetime access!!</p>
+                <p>Learn and explore across <span>{purchase.length}</span> purchased courses!!</p>
                 {/* Search bar */}
               </div>
               <div className="yt_videos">
@@ -120,7 +122,7 @@ function PurchasedCourses() {
                     </div>
                   ))}
               </div>
-            </div>
+            </div> 
           )}
           {purchase.length <= 0 && (<><div className='purchased_not'>You are not having any Purchasd courses yet...  <Button variant='contained' onClick={()=>navigate('/showavailablecourses')} color='warning' >Available Courses</Button></div>
           </>)}

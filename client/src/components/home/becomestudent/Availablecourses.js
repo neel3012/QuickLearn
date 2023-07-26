@@ -7,28 +7,34 @@ import Image from "../../../assets/back.jpg";
 import { useNavigate } from "react-router-dom";
 import '../../searchresult.css'
 import { deepOrange } from "@mui/material/colors";
+import { useSelector } from "react-redux";
+import { sendStudentdata } from "../../../app/features/studentReducer";
 
 const Availablecourses = () => {
   const [courseData, setCourseData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  
+  const studentdata=useSelector(sendStudentdata)
   console.log("course data is", courseData);
+  const studentname=studentdata?.findusername.username;
+ 
 
   useEffect(() => {
-    fetchCourseData();
+    fetchCourseData(studentname);
   }, []);
 
-  const fetchCourseData = async () => {
+  const fetchCourseData = async (studentname) => {
     try {
-      const response = await fetch(`http://localhost:5000/showallcourses`, {
+      const response = await fetch(`http://localhost:5000/showallcourses?studentName=${studentname}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await response.json();
-      console.log('inner data',data)
+      console.log('inner data',data)//apply logic here...
+
+
       setCourseData(data);
     } catch (error) {
       console.log(error);
@@ -46,7 +52,7 @@ const Availablecourses = () => {
         <h1>
           excess <span>Premium</span> learning and grow
         </h1>
-        <p>Click on the course to access and explore!</p>
+        <p>Click on the course to access and explore across <span>{courseData?.length}</span> courses!</p>
         {/* Search bar */}
         <TextField
         style={{margin:'20px',height:'10px',width:'40vw'}}

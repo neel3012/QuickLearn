@@ -52,8 +52,8 @@ function App() {
         {isStudentAuthenticated && (<Route path='/showavailablecourses' element={<Availablecourses/>}/>)}
         {isStudentAuthenticated && (<Route path='/showcoursebyidforstudent/:courseID' element={<Availablecoursesbyid/>}/>)}
         
-        <Route path='/purchasedCourses' element={<PurchasedCourses/>}/>
-        <Route path='authorize/access/:courseID' element={<Authorizematerial/>}/>
+        {isStudentAuthenticated && <Route path='/purchasedCourses' element={<PurchasedCourses/>}/>}
+        {isStudentAuthenticated && <Route path='authorize/access/:courseID' element={<Authorizematerial/>}/>}
          <Route path="/search" element={<SearchResults />} />
          <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>
