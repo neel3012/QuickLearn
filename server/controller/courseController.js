@@ -159,10 +159,16 @@ exports.showcoursesfordetail=async(req,res)=>{
 
 exports.findpurchasedcoursebyid=async (req, res) => {
   try {
-    const courseIDs = await Payment.distinct('courseID');
+    const username = req.header('User-Name');
+    // const courseIDs = await Payment.distinct('courseID');
+
+    const purchasedCourses = await Payment.find({ studentName: username }).select('courseID');
+
+    // Extract the courseIDs from the purchased courses.
+    const courseIDs = purchasedCourses.map((course) => course.courseID);
 
     if (!courseIDs || courseIDs.length === 0) {
-      return res.status(404).json({ error: 'No courses for you...' });
+      return res.status(204).json({ error: 'No courses for you...' });
     }
 
     res.json(courseIDs);

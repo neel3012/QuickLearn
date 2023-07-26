@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { checkStudentAuthentication } from '../../app/features/studentReducer';
+import { checkStudentAuthentication, sendStudentdata } from '../../app/features/studentReducer';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, CircularProgress } from '@mui/material';
+import { Avatar, Button, CircularProgress } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import '../searchresult.css';
 
@@ -13,20 +13,29 @@ function PurchasedCourses() {
   const [purchase, setPurchase] = useState([]);
   const [loading, setLoading] = useState(true);
   const isStudentStillPresent = useSelector(checkStudentAuthentication);
-
+  const studentloggeddata=useSelector(sendStudentdata)
+  const uname=studentloggeddata?.findusername?.username
   useEffect(() => {
     fetchCourseData();
   }, []);
 
+
+
   const fetchCourseData = async () => {
     try {
+      setLoading(false);
+
       const response = await fetch('http://localhost:5000/findpurchasedcoursebyid', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'User-Name': uname,
         },
       });
       const data = await response.json();
+      if(data.error){
+        console.log('err is here')
+      }
       setCourseData(data);
       setLoading(false);
     } catch (error) {
@@ -34,6 +43,9 @@ function PurchasedCourses() {
       setLoading(false);
     }
   };
+
+
+
 
   const fetchIndividualPurchaseData = async (dataIds) => {
     try {
@@ -48,6 +60,7 @@ function PurchasedCourses() {
       });
 
       const purchaseData = await Promise.all(purchasePromises);
+      console.log('trans purchase',purchaseData)
       setPurchase(purchaseData);
     } catch (error) {
       console.log(error);
@@ -84,8 +97,7 @@ function PurchasedCourses() {
               </div>
               <div className="yt_videos">
                 {purchase
-                  .slice()
-                  .reverse()
+                 
                   .map((data, index) => (
                     <div className="coursein_video" key={data?._id} onClick={()=>clickthbutton(data)}>
                       <div className="yt_img">
@@ -110,6 +122,8 @@ function PurchasedCourses() {
               </div>
             </div>
           )}
+          {purchase.length <= 0 && (<><div className='purchased_not'>You are not having any Purchasd courses yet...  <Button variant='contained' onClick={()=>navigate('/showavailablecourses')} color='warning' >Available Courses</Button></div>
+          </>)}
         </>
       )
       ) : (

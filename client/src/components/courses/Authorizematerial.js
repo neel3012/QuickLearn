@@ -3,7 +3,7 @@
 // import { Link, useNavigate, useParams } from 'react-router-dom';
 // import { sendtutordata } from '../../app/features/tutorReducer';
 // import { Avatar } from '@mui/material';
-
+// import './authorize.css'
 // function Authorizematerial() {
 //     const { courseID } = useParams();
 //     const [courseData, setCourseData] = useState({});
@@ -102,9 +102,12 @@
 
 
 //         <div>
-//           Drive Access for extra material: <a target='_blank' href={courseData?.drive}>{courseData?.drive}</a>
-//         </div>
-
+//         {/* Add "link-style" class to make it look like a link */}
+//         Drive Access for extra material:{' '}
+//         <a target="_blank" href={courseData?.drive} className="link-style">
+//           {courseData?.drive}
+//         </a>
+//       </div>
 //         <div className='related_videos_authorize'>
 //              <div className="yt_header">
 //              <h1>
@@ -151,111 +154,85 @@
 // export default Authorizematerial
 
 
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { sendtutordata } from '../../app/features/tutorReducer';
-import { Avatar } from '@mui/material';
-const {google} = require('googleapis');
+import { Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import './authorize.css'
+import drive from '../../assets/drive.png'
+import yt from '../../assets/yt.png'
+import { deepOrange } from '@mui/material/colors';
 function Authorizematerial() {
-    const { courseID } = useParams();
-    const [courseData, setCourseData] = useState({});
-    const [videos, setVideos] = useState([]);
+  const { courseID } = useParams();
+  const [courseData, setCourseData] = useState({});
+  const [videos, setVideos] = useState([]);
+  const [showPdfModal, setShowPdfModal] = useState(false);
+  const [showDriveModal, setShowDriveModal] = useState(false);
+  const navigate = useNavigate();
 
-    const navigate=useNavigate();
-    useEffect(() => {
-      if (courseData?.title) {
-        fetchVideos(courseData?.title);
+  useEffect(() => {
+    if (courseData?.title) {
+      fetchVideos(courseData?.title);
+    }
+  }, [courseData?.title]);
+
+  const fetchVideos = async (searchQuery) => {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(courseData?.title)}&part=snippet&type=video&&maxResults=6&key=AIzaSyACg9H0X-JuBNfjTKbI2sQa_nufAXpz628`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setVideos(data.items);
       }
-    }, [courseData?.title]);
-  
-    const fetchVideos = async (searchQuery) => {
-      try {
-        const response = await fetch(
-          `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(courseData?.title)}&part=snippet&type=video&&maxResults=6&key=AIzaSyBGl7SCCjcqhc-ukJuFjbkP3OIFnOwuvRQ`
-        );
-        console.log(response)
-  
-        if (response.ok) {
-          const data = await response.json();
-          setVideos(data.items);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-     const handleClick=(e)=>{
-      
-      navigate(`/video/${e.id.videoId}`)
-     }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const getCourseData = async () => {
-        try {
-          const response = await fetch(
-            `http://localhost:5000/courseinfo/${courseID}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const cdata = await response.json();
-          setCourseData(cdata);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-    
-      useEffect(() => {
-        getCourseData();
-      }, [courseID]);
-      useEffect(() => {
-        if (courseData?.drive) {
-          fetchDriveData(courseData.drive);
-        }
-      }, [courseData.drive]);
+  const handleClick = (e) => {
+    navigate(`/video/${e.id.videoId}`);
+  };
 
-      const fetchDriveData = async (driveLink) => {
-        try {
-          const fileId = extractFileIdFromUrl(driveLink);
-          const auth = await getGoogleDriveAuth();
-          const drive = google.drive({ version: 'v3', auth });
+  const getCourseData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/courseinfo/${courseID}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const cdata = await response.json();
+      setCourseData(cdata);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getCourseData();
+  }, [courseID]);
+
+  
+
+  const handleDriveModalOpen = () => {
+    setShowDriveModal(true);
+  };
+
+  const handleDriveModalClose = () => {
+    setShowDriveModal(false);
+  };
+  const [clickyt,setclickyt]=useState(false);
+  const handleClickforyt=(e)=>{
     
-          const response = await drive.files.get({
-            fileId,
-            alt: 'media',
-          });
-    
-          setDriveData(response.data);
-    
-        } catch (error) {
-          console.error('Error fetching data from Google Drive:', error);
-        }
-      };
-    
-      const extractFileIdFromUrl = (url) => {
-        const match = url.match(/[-\w]{25,}/);
-        return match ? match[0] : null;
-      };
-    
-      const getGoogleDriveAuth = async () => {
-        // Replace 'YOUR_API_KEY' with your actual API key obtained from Google Developer Console
-        const apiKey = 'AIzaSyCWO-iqS8pzinOTbKq7fHRbC4ToDW5pSN0';
-        const { gapi } = window;
-    
-        await gapi.load('client', () => {
-          gapi.client.setApiKey(apiKey);
-          gapi.client.load('drive', 'v3');
-        });
-    
-        return gapi.auth2.getAuthInstance().signIn();
-      };
-    
+    setclickyt(true);
+  }
   return (
-   <>
-    <div className="view_main">
+    <>
+      <div className="view_main">
       <div className="view_imagesection">
         <img
           src={courseData?.picture}
@@ -270,18 +247,18 @@ function Authorizematerial() {
         </div>
         <div className="view_description">⚪ {courseData.description}</div>
        <h3 className='view_hoursetting'>It will take your <span className='view_hours'>{courseData.approximateHours}</span> Hours to finish!</h3>
+</div>
 
-
-       <div className="yt_header">
-        <h1>
-          excess Premium <span>Material</span> and Related<span> Videos.</span>
-        </h1>
-        <p>Scroll Down To Access Or <span>Download</span>!</p>
-        {/* Search bar */}
+        <div className="yt_header">
+          <h1>
+            Excess Premium <span>Material</span> and Related <span>Videos.</span>
+          </h1>
+          <p>Scroll Down To Access Or <span>Download</span>!</p>
+          {/* Search bar */}
+        </div>
        
-      </div>
         <div className="view_pdfsetting">
-        <object
+         <object
           data={courseData?.userfile}
           type="application/pdf"
          
@@ -295,52 +272,84 @@ function Authorizematerial() {
         </object>
         </div>
 
-
-        <div>
-          Drive Access for extra material: <a target='_blank' href={courseData?.drive}>{courseData?.drive}</a>
-        </div>
-
-        <div className='related_videos_authorize'>
-             <div className="yt_header">
-             <h1>
-                 excess related <span>Open-source Videos</span> and <span>Learn</span>
-            </h1>
-        {/* Search bar */}
-       
-             </div>
-
-             <div className='yt_videos'>
-         {videos.map((video) => (
-            
-   
-    <div className='yt_video' key={video.id.videoId} onClick={()=>handleClick(video)}>
-       {console.log(video)}
-               <div className='yt_img'>
-           <img src={video.snippet.thumbnails.high.url} alt='course_img'/>
-                </div>
-                <div className='yt_nameandlogo'>
-                   <Avatar/>
-                    <div>{video.snippet.title.lenght>30 ?  video.snippet.title.slice(0,30): video.snippet.title.slice(0,30).concat('...')}</div>
-                </div>
-            <div className='yt_description'>
-                   <p>{video.snippet.description.slice(0, 50)}...</p> 
-                   <p className='yt_hour'>{video.snippet.channelTitle}
-</p>
-                </div>
-            </div>
-      ))}
-    </div>
-
-
-
-        </div>
-
         
-      </div>
-    </div>
 
-   </>
-  )
+        <div className='access_drivematerial yt_header'>
+        <p className='avail_innn'>Hit Enter And Take Bonus Material By instuctor <b>{courseData?.addedBy}</b></p>
+          {/* <Button onClick={handleDriveModalOpen} variant="contained">
+            Drive Access for extra material
+          </Button> */}
+          <div className='drive_yt_setting'>
+          <div className='drive_btn' onClick={handleDriveModalOpen}>
+          <img src={drive} className='drive_img' alt='google_drive'/>
+          </div>
+
+          <div className='drive_btn' onClick={()=>handleClickforyt()}>
+          <img src={yt} className='drive_img' alt='google_drive'/>
+          </div>
+          
+          </div>
+
+        </div>
+
+       {clickyt && (<div className="related_videos_authorize">
+          <div className="yt_header">
+            <h1>
+              Excess related <span>Open-source Videos</span> and <span>Learn</span>
+            </h1>
+            {/* Search bar */}
+          </div>
+
+          <div className="yt_videos">
+            {videos.map((video) => (
+              <div className="yt_video" key={video.id.videoId} onClick={() => handleClick(video)}>
+                <div className="yt_img">
+                  <img src={video.snippet.thumbnails.high.url} alt="course_img" />
+                </div>
+                <div className="yt_nameandlogo">
+                <Avatar
+                sx={{ bgcolor: deepOrange[500] }}/>
+                  <div>{video.snippet.title.length > 30 ? video.snippet.title.slice(0, 30) : video.snippet.title.slice(0, 30).concat('...')}</div>
+                </div>
+                <div className="yt_description">
+                  <p>{video.snippet.description.slice(0, 50)}...</p>
+                  <p className="yt_hour">{video.snippet.channelTitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>)} 
+      </div>
+
+      {/* PDF Modal */}
+     
+
+      {/* Drive Modal */}
+      <Dialog open={showDriveModal} onClose={handleDriveModalClose} maxWidth="md" fullWidth>
+        <DialogTitle>
+          Drive Access
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={handleDriveModalClose}
+            aria-label="close"
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <a target="_blank" href={courseData?.drive}>
+            {courseData?.drive}
+          </a>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
 }
 
-export default Authorizematerial
+export default Authorizematerial;

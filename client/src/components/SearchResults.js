@@ -3,6 +3,7 @@ import Back from '../assets/back.jpg'
 import { Avatar } from '@mui/material';
 import './searchresult.css'
 import { useNavigate } from 'react-router-dom';
+import { deepOrange } from '@mui/material/colors';
 const SearchResults = () => {
   const [videos, setVideos] = useState([]);
   const navigate=useNavigate()
@@ -19,7 +20,7 @@ const SearchResults = () => {
   const fetchVideos = async (searchQuery) => {
     try {
       const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(searchQuery)}&part=snippet&type=video&&maxResults=10&key=AIzaSyBGl7SCCjcqhc-ukJuFjbkP3OIFnOwuvRQ`
+        `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(searchQuery)}&part=snippet&type=video&&maxResults=10&key=AIzaSyACg9H0X-JuBNfjTKbI2sQa_nufAXpz628`
       );
       console.log(response)
 
@@ -39,7 +40,7 @@ const SearchResults = () => {
  
       <>
 <div className='yt_header'>
-        <h1>excess <span>Free</span> learning ang grow</h1>
+        <h1>excess <span>Free</span> learning and <span>grow</span></h1>
         <p>Your search result for {searchQuery}</p>
     </div>
     <div className='yt_videos'>
@@ -52,7 +53,7 @@ const SearchResults = () => {
            <img src={video.snippet.thumbnails.high.url} alt='course_img'/>
                 </div>
                 <div className='yt_nameandlogo'>
-                   <Avatar/>
+                   <Avatar  sx={{ bgcolor: deepOrange[500] }}/>
                     <div>{video.snippet.title.lenght>30 ?  video.snippet.title.slice(0,30): video.snippet.title.slice(0,30).concat('...')}</div>
                 </div>
             <div className='yt_description'>
