@@ -1,16 +1,20 @@
-
-
-
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import './authorize.css'
-import drive from '../../assets/drive.png'
-import yt from '../../assets/yt (2).png'
-import { deepOrange } from '@mui/material/colors';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import "./authorize.css";
+import drive from "../../assets/drive.png";
+import yt from "../../assets/yt (2).png";
+import { deepOrange } from "@mui/material/colors";
+import axios from "axios";
 function Authorizematerial() {
   const { courseID } = useParams();
   const [courseData, setCourseData] = useState({});
@@ -18,21 +22,21 @@ function Authorizematerial() {
   const [showPdfModal, setShowPdfModal] = useState(false);
   const [showDriveModal, setShowDriveModal] = useState(false);
   const navigate = useNavigate();
-  console.log('in is',courseData?.title)
+  console.log("in is", courseData?.title);
   const options = {
-    method: 'GET',
-    url: 'https://bing-news-search1.p.rapidapi.com/news/search',
+    method: "GET",
+    url: "https://bing-news-search1.p.rapidapi.com/news/search",
     params: {
-      q:courseData?.title ,
-      freshness: 'Day',
-      textFormat: 'Raw',
-      safeSearch: 'Off'
+      q: courseData?.title,
+      freshness: "Day",
+      textFormat: "Raw",
+      safeSearch: "Off",
     },
     headers: {
-      'X-BingApis-SDK': 'true',
-      'X-RapidAPI-Key': '8fc89b5015msh9857b7ea4d7c94cp1dd817jsn7ef6e163ce83',
-      'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-    }
+      "X-BingApis-SDK": "true",
+      "X-RapidAPI-Key": "8fc89b5015msh9857b7ea4d7c94cp1dd817jsn7ef6e163ce83",
+      "X-RapidAPI-Host": "bing-news-search1.p.rapidapi.com",
+    },
   };
   useEffect(() => {
     if (courseData?.title) {
@@ -47,20 +51,21 @@ function Authorizematerial() {
     getNewsData();
   }, []);
 
-  
-  const getNewsData=async ()=>{
+  const getNewsData = async () => {
     try {
       const response = await axios.request(options);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const fetchVideos = async (searchQuery) => {
     try {
       const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(courseData?.title)}&part=snippet&type=video&&maxResults=6&key=AIzaSyACg9H0X-JuBNfjTKbI2sQa_nufAXpz628`
+        `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(
+          courseData?.title
+        )}&part=snippet&type=video&&maxResults=6&key=AIzaSyACg9H0X-JuBNfjTKbI2sQa_nufAXpz628`
       );
 
       if (response.ok) {
@@ -78,12 +83,15 @@ function Authorizematerial() {
 
   const getCourseData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/courseinfo/${courseID}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/courseinfo/${courseID}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const cdata = await response.json();
       setCourseData(cdata);
@@ -92,9 +100,6 @@ function Authorizematerial() {
     }
   };
 
- 
-  
-
   const handleDriveModalOpen = () => {
     setShowDriveModal(true);
   };
@@ -102,107 +107,142 @@ function Authorizematerial() {
   const handleDriveModalClose = () => {
     setShowDriveModal(false);
   };
-  const [clickyt,setclickyt]=useState(false);
-  const handleClickforyt=(e)=>{
-    
+  const [clickyt, setclickyt] = useState(false);
+  const handleClickforyt = (e) => {
     setclickyt(true);
-  }
+  };
   return (
     <>
       <div className="view_main">
-      <div className="view_imagesection">
-        <img
-          src={courseData?.picture}
-          className="view_mainimage"
-          alt="courseImage"
-        />
-      </div>
-      <div className="view_mainbody">
-        <div className="view_head">
-          <h1>{courseData?.title}</h1>
-          <p>Author: {courseData?.addedBy}</p>
+        <div className="view_imagesection">
+          <img
+            src={courseData?.picture}
+            className="view_mainimage"
+            alt="courseImage"
+          />
         </div>
-        <div className="view_description">⚪ {courseData.description}</div>
-       <h3 className='view_hoursetting'>It will take your <span className='view_hours'>{courseData.approximateHours}</span> Hours to finish!</h3>
-</div>
+        <div className="view_mainbody">
+          <div className="view_head">
+            <h1>{courseData?.title}</h1>
+            <p>Author: {courseData?.addedBy}</p>
+          </div>
+          <div className="view_description">⚪ {courseData.description}</div>
+          <h3 className="view_hoursetting">
+            It will take your{" "}
+            <span className="view_hours">{courseData.approximateHours}</span>{" "}
+            Hours to finish!
+          </h3>
+        </div>
 
         <div className="yt_header">
           <h1>
-            Excess Premium <span>Material</span> and Related <span>Videos.</span>
+            Excess Premium <span>Material</span> and Related{" "}
+            <span>Videos.</span>
           </h1>
-          <p>Scroll Down To Access Or <span>Download</span>!</p>
+          <p>
+            Scroll Down To Access Or <span>Download</span>!
+          </p>
           {/* Search bar */}
         </div>
-       
+
         <div className="view_pdfsetting">
-         <object
-          data={courseData?.userfile}
-          type="application/pdf"
-         
-          className="view_object"
-          
-        >
-          <p>
-            Alternative text - include a link{" "}
-            <a href={courseData?.userfile}>to the PDF!</a>
-          </p>
-        </object>
+          <object
+            data={courseData?.userfile}
+            type="application/pdf"
+            className="view_object"
+          >
+            <p>
+              Alternative text - include a link{" "}
+              <a href={courseData?.userfile}>to the PDF!</a>
+            </p>
+          </object>
         </div>
 
-        
+        {/* here i need to enter video from tutor */}
 
-        <div className='access_drivematerial yt_header'>
-        <p className='avail_innn'>Hit Enter And Take Bonus Material By instuctor <b>{courseData?.addedBy}</b></p>
+        <div className="tutor_access">
+        {/* <video width="640" height="360" controls>
+          {console.log('v url is',courseData?.videoUrl)}
+            <source src={courseData?.videoUrl} type="video/mp4" /> */}
+            {/* Optionally, you can provide additional source types for cross-browser support */}
+            {/* <source src={courseData?.videoUrl} type="video/webm" /> 
+             <source src={courseData?.videoUrl} type="video/ogg" />
+           
+          </video> */}
+
+         <a href={courseData?.videoUrl} target="_blank">Link video</a>
+        </div>
+
+        <div className="access_drivematerial yt_header">
+          <p className="avail_innn">
+            Hit Enter And Take Bonus Material By instuctor{" "}
+            <b>{courseData?.addedBy}</b>
+          </p>
           {/* <Button onClick={handleDriveModalOpen} variant="contained">
             Drive Access for extra material
           </Button> */}
-          <div className='drive_yt_setting'>
-          <div className='drive_btn' onClick={handleDriveModalOpen}>
-          <img src={drive} className='drive_img' alt='google_drive'/>
-          </div>
+          <div className="drive_yt_setting">
+            <div className="drive_btn" onClick={handleDriveModalOpen}>
+              <img src={drive} className="drive_img" alt="google_drive" />
+            </div>
 
-          <div className='drive_btn' onClick={()=>handleClickforyt()}>
-          <img src={yt} className='drive_img' alt='google_drive'/>
+            <div className="drive_btn" onClick={() => handleClickforyt()}>
+              <img src={yt} className="drive_img" alt="google_drive" />
+            </div>
           </div>
-          
-          </div>
-
         </div>
 
-       {clickyt && (<div className="related_videos_authorize">
-          <div className="yt_header">
-            <h1>
-              Excess related <span>Open-source Videos</span> and <span>Learn</span>
-            </h1>
-            {/* Search bar */}
-          </div>
+        {clickyt && (
+          <div className="related_videos_authorize">
+            <div className="yt_header">
+              <h1>
+                Excess related <span>Open-source Videos</span> and{" "}
+                <span>Learn</span>
+              </h1>
+              {/* Search bar */}
+            </div>
 
-          <div className="yt_videos">
-            {videos.map((video) => (
-              <div className="yt_video" key={video.id.videoId} onClick={() => handleClick(video)}>
-                <div className="yt_img">
-                  <img src={video.snippet.thumbnails.high.url} alt="course_img" />
+            <div className="yt_videos">
+              {videos.map((video) => (
+                <div
+                  className="yt_video"
+                  key={video.id.videoId}
+                  onClick={() => handleClick(video)}
+                >
+                  <div className="yt_img">
+                    <img
+                      src={video.snippet.thumbnails.high.url}
+                      alt="course_img"
+                    />
+                  </div>
+                  <div className="yt_nameandlogo">
+                    <Avatar sx={{ bgcolor: deepOrange[500] }} />
+                    <div>
+                      {video.snippet.title.length > 30
+                        ? video.snippet.title.slice(0, 30)
+                        : video.snippet.title.slice(0, 30).concat("...")}
+                    </div>
+                  </div>
+                  <div className="yt_description">
+                    <p>{video.snippet.description.slice(0, 50)}...</p>
+                    <p className="yt_hour">{video.snippet.channelTitle}</p>
+                  </div>
                 </div>
-                <div className="yt_nameandlogo">
-                <Avatar
-                sx={{ bgcolor: deepOrange[500] }}/>
-                  <div>{video.snippet.title.length > 30 ? video.snippet.title.slice(0, 30) : video.snippet.title.slice(0, 30).concat('...')}</div>
-                </div>
-                <div className="yt_description">
-                  <p>{video.snippet.description.slice(0, 50)}...</p>
-                  <p className="yt_hour">{video.snippet.channelTitle}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>)} 
+        )}
       </div>
 
       {/* PDF Modal */}
-     
 
       {/* Drive Modal */}
-      <Dialog open={showDriveModal} onClose={handleDriveModalClose} maxWidth="md" fullWidth>
+      <Dialog
+        open={showDriveModal}
+        onClose={handleDriveModalClose}
+        maxWidth="md"
+        fullWidth
+      >
         <DialogTitle>
           Drive Access
           <IconButton
@@ -211,7 +251,7 @@ function Authorizematerial() {
             onClick={handleDriveModalClose}
             aria-label="close"
             sx={{
-              position: 'absolute',
+              position: "absolute",
               right: 8,
               top: 8,
             }}
@@ -226,9 +266,7 @@ function Authorizematerial() {
         </DialogContent>
       </Dialog>
 
-      <section className='auth_news'>
-            
-      </section>
+      <section className="auth_news"></section>
     </>
   );
 }

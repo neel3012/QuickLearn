@@ -4,10 +4,11 @@ const stripe = require('stripe')('sk_test_51NT9nND0FISafXCSwu0Uh5RngcSUa04DnNVzF
 const {registerTutor,loginteacher,courseaddition} = require("../controller/tutorController.js");
 const { addnewcoursehere, showcourses, getCourseData, getallcourses, showcoursesfordetail, getdataofpurchasedcourse, findCoursesByIDs, findpurchasedcoursebyid, deletecourse } = require('../controller/courseController.js');
 const { uploadImage, getImage } = require('../controller/image-controller.js');
-const {upload, uploadtutorfile} = require('../utils/upload.js');
+const {upload, uploadtutorfile, uploadvideofile} = require('../utils/upload.js');
 const { uploadFile, getFile } = require('../controller/file-controller.js');
 const { registerstudent, loggedstudentinn } = require('../controller/studentController.js');
 const Payment = require('../model/payment.js');
+const { getVideo, uploadVideo } = require('../controller/videoController.js');
 
 router.post('/process-payment', async (req, res) => {
   try {
@@ -61,9 +62,8 @@ router.get('/file/:filename', getImage);
 router.post('/uploadedfile/uploadtutorfile', uploadtutorfile.single('file'), uploadFile);
 
 router.get('/uploadedfile/:filename',getFile );
-
-
-//student section....
+router.post('/video/upload', uploadvideofile.single('video'), uploadVideo);
+router.get('/uploadedvideo/:filename', getVideo);//student section....
 router.delete('/items/:courseID',deletecourse)
 router.post('/joinasstudent',registerstudent);
 router.post('/studentlogin',loggedstudentinn);

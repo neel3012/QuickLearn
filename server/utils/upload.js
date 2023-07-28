@@ -21,6 +21,28 @@ const storage = new GridFsStorage({
     
   }
 });
+
+const videoStorage = new GridFsStorage({
+  url: `mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority`,
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
+  file: (req, file) => {
+    const match = ["video/mp4", "video/quicktime", "video/webm", "video/x-msvideo"];
+    
+    if (match.indexOf(file.mimetype) === -1) {
+      return `${Date.now()}-video-${file.originalname}`
+   
+    }
+
+    return {
+      bucketName: "videos",
+      filename: `${Date.now()}-video-${file.originalname}`,
+    };
+  },
+});
+
+
+
+
 console.log('hey')
 const storageFiles = new GridFsStorage({    //problem occure here in location of this
   url: `mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority`,
@@ -42,7 +64,7 @@ const storageFiles = new GridFsStorage({    //problem occure here in location of
 
 const upload = multer({ storage:storage });
 const uploadtutorfile = multer({ storage:storageFiles });
-
+const uploadvideofile=multer({ storage: videoStorage});
 module.exports = {
-  upload,uploadtutorfile
+  upload,uploadtutorfile,uploadvideofile
 };

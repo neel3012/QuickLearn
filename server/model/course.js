@@ -37,6 +37,9 @@ const courseSchema = new mongoose.Schema({
       required: false,
     }
   ,
+  videoUrl:
+  { type: String,
+    required: false, },
   createdDate: {
       type: Date,
       default: Date.now,
