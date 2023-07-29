@@ -6,12 +6,48 @@
 }
 
 .course_descr {
-    width: 100%;
+    /* width: 100%;
     border: none;
     margin-top: 50px;
     font-size: 18px;
     height: 150px!important; /* Set the desired height */
-    &:focus-visible {
-      outline: none;
-    }
+    width: 100%;
+   
+    margin-top: 50px;
+    margin-left:40px;
+    font-size: 18px; height: 150px!important;
+  }
+
+  
+  .in_image{
+    width:100px;
+    height:100px;
+  }
+  .ad_indisp{
+    display: flex;
+    align-items: center;
+  }
+  /* .ad_indisp1{
+    width:70vw;;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+ 
+  .course_fileupload{
+  
+    border:none;
+  } */
+
+  .ad_indisp1{
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    
+  }
+  .course_fileupload{
+    width: 400px;
+    height: 50px;
   }

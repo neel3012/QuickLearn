@@ -45,11 +45,38 @@ a {
  }
 
  .access_drivematerial{
-    margin:30px 0;
+    margin:100px 0;
  }
  .drive_yt_setting{
     display: flex;
     align-items: center;
     justify-content: space-around;
     width:40%;
+ }
+ .tutor_access{
+   width:80%;
+   height: 50vh;
+   margin: 0 auto;
+   object-fit: contain;
+   /* background-repeat: no-repeat;
+   /* background-attachment: fixed; */
+   /* background-position: center;  */
+   background-repeat: no-repeat;
+   background-position: center;
+   background-image: url('../../assets/vinside.jpg');
+   border-radius: 20px;
+ }
+ .tutor_access_n1{
+   background-color: white;
+   display: flex;
+  justify-content: center;
+   flex-direction: column;
+   margin:40px 50px;
+   padding:0px 20px;
+   width:400px;
+   height: 200px;
+
+ }
+ .tutor_access_n1 Button{
+   margin-top: 10px;
  }

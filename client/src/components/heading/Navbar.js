@@ -125,14 +125,11 @@ const Navbar = () => {
 
         <div className='navbar_ending'>
             <NavLink to='/purchasedCourses' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>My Learning</NavLink>
-            <NavLink to='/learning' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>Instructor</NavLink>
-           <Link to='/cart'>
-           <IconButton>
-            <Badge badgeContent={4} color="primary">
-               <ShoppingCartOutlinedIcon color="action" />
-            </Badge>
-            </IconButton>
-           </Link>
+            <NavLink to='/showavailablecourses' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>Student</NavLink>
+           
+           <NavLink to='/about' style={{ textDecoration: 'none',cursor:'pointer',color:'black'}}>About us</NavLink>
+
+        
            <Link to='/profile'>
            <StyledBadge
         overlap="circular"

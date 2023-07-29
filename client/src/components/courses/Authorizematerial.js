@@ -23,21 +23,7 @@ function Authorizematerial() {
   const [showDriveModal, setShowDriveModal] = useState(false);
   const navigate = useNavigate();
   console.log("in is", courseData?.title);
-  const options = {
-    method: "GET",
-    url: "https://bing-news-search1.p.rapidapi.com/news/search",
-    params: {
-      q: courseData?.title,
-      freshness: "Day",
-      textFormat: "Raw",
-      safeSearch: "Off",
-    },
-    headers: {
-      "X-BingApis-SDK": "true",
-      "X-RapidAPI-Key": "8fc89b5015msh9857b7ea4d7c94cp1dd817jsn7ef6e163ce83",
-      "X-RapidAPI-Host": "bing-news-search1.p.rapidapi.com",
-    },
-  };
+  
   useEffect(() => {
     if (courseData?.title) {
       fetchVideos(courseData?.title);
@@ -47,18 +33,8 @@ function Authorizematerial() {
     getCourseData();
   }, [courseID]);
 
-  useEffect(() => {
-    getNewsData();
-  }, []);
 
-  const getNewsData = async () => {
-    try {
-      const response = await axios.request(options);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   const fetchVideos = async (searchQuery) => {
     try {
@@ -161,16 +137,14 @@ function Authorizematerial() {
         {/* here i need to enter video from tutor */}
 
         <div className="tutor_access">
-        {/* <video width="640" height="360" controls>
-          {console.log('v url is',courseData?.videoUrl)}
-            <source src={courseData?.videoUrl} type="video/mp4" /> */}
-            {/* Optionally, you can provide additional source types for cross-browser support */}
-            {/* <source src={courseData?.videoUrl} type="video/webm" /> 
-             <source src={courseData?.videoUrl} type="video/ogg" />
-           
-          </video> */}
+           <div className="tutor_access_n1">
+            <h1>Learn, Access And Grow</h1>
+            <p>Access your tutor uploaded videos.</p>
+            <a href={courseData?.videoUrl} target="_blank"><Button variant="contained" color="warning">Watch Video</Button></a>
 
-         <a href={courseData?.videoUrl} target="_blank">Link video</a>
+           </div>
+
+         {/* <a href={courseData?.videoUrl} target="_blank">Link video</a> */}
         </div>
 
         <div className="access_drivematerial yt_header">
