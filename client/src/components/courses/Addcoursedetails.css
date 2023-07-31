@@ -83,3 +83,10 @@ margin: 100px 0;;}
         text-align: center;
         margin:20px 0;
     }
+    .btn_dlt{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        margin:20px 0;
+    }

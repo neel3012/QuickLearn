@@ -102,7 +102,7 @@ function Authorizematerial() {
             <h1>{courseData?.title}</h1>
             <p>Author: {courseData?.addedBy}</p>
           </div>
-          <div className="view_description">⚪ {courseData.description}</div>
+          <div className="view_description">► {courseData.description}</div>
           <h3 className="view_hoursetting">
             It will take your{" "}
             <span className="view_hours">{courseData.approximateHours}</span>{" "}

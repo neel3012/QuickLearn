@@ -9,7 +9,7 @@ const { uploadFile, getFile } = require('../controller/file-controller.js');
 const { registerstudent, loggedstudentinn } = require('../controller/studentController.js');
 const Payment = require('../model/payment.js');
 const { getVideo, uploadVideo } = require('../controller/videoController.js');
-
+const nodemailer = require('nodemailer');
 router.post('/process-payment', async (req, res) => {
   try {
     const { amount, token, courseID,studentName } = req.body;
@@ -67,4 +67,6 @@ router.get('/uploadedvideo/:filename', getVideo);//student section....
 router.delete('/items/:courseID',deletecourse)
 router.post('/joinasstudent',registerstudent);
 router.post('/studentlogin',loggedstudentinn);
+
+
 module.exports = router;

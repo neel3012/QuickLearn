@@ -75,7 +75,7 @@ function Joinasstudent() {
           swal(studentdata.msg,"please provide right credetials...","info");
         }
         else{
-          window.alert('login successfull...')
+          swal("Logged in successfull","Purchase and take advantage of courses!","success")
           setEmail('');
         setPassword('');
         
@@ -104,7 +104,7 @@ function Joinasstudent() {
     
     
     <form onSubmit={handleSubmit} method='POST'>
-      <h1>Create Account</h1>
+      <h1 className='h1_loggedstudenr'>Create Account</h1>
 <br/>
       <label>
         Email:
@@ -151,7 +151,7 @@ function Joinasstudent() {
     
     
     <form onSubmit={handleLogin} method='POST'>
-      <h1>Login Account</h1>
+      <h1 className='h1_loggedstudenr'>Login Account</h1>
 <br/>
       <label>
         Email:

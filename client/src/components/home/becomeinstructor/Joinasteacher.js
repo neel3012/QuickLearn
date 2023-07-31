@@ -120,8 +120,7 @@ function Joinasteacher() {
       dispatch(isStudentnotAuthenticated(res.data));
     }
     else{
-      window.alert('login successfull...')
-      setEmail('');
+      swal("Logged in successfully!", "Click to go explore!", "success");      setEmail('');
     setPassword('');
     
     dispatch(isTutorAuthenticated(res.data)); // Pass the token data as the payload

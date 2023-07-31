@@ -85,7 +85,7 @@ function CourseDetails() {
           <h1>{courseData?.title}</h1>
           <p>Author: {courseData?.addedBy}</p>
         </div>
-        <div className="view_description">⚪ {courseData.description}</div>
+        <div className="view_description">► {courseData.description}</div>
        <h3 className='view_hoursetting'>It will take your <span className='view_hours'>{courseData.approximateHours}</span> Hours to finish!</h3>
         <div className="view_pdfsetting">
         <object
@@ -103,8 +103,11 @@ function CourseDetails() {
         </div>
 
         <h5 className="view_h5">You logged in as <span className="view_hours1">{selector.findusername.email}</span> as user.</h5>
+        <div className="btn_dlt">
         <Button variant="outlined" onClick={()=>handleDelete()} className="view_h5" sx={{display:"flex",alignItems:'center',justifyContent:'center'}} color="error">
         {loading ? "Deleting..." : "Delete Course"}</Button>
+        </div>
+       
       </div>
     </div>
   );

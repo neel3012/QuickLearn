@@ -90,6 +90,7 @@ const Addcoursehere = () => {
   useEffect(() => {
     const getImage = async () => {
       console.log("value for file", file);
+      
 
       if (file) {
         let data = new FormData();
@@ -135,8 +136,9 @@ const Addcoursehere = () => {
   // Function to upload the selected video file
   const uploadVideo = async () => {
     console.log("hello");
-    setupload(true)
+   
     if (video) {
+      setupload(true)
       let videoData = new FormData();
       videoData.append("video", video);
       console.log("vdata", videoData);
@@ -158,15 +160,21 @@ const Addcoursehere = () => {
         }));
       } catch (error) {
         console.error("Error uploading video", error);
+       
         setupload(false)
       }
+    }
+    else{
+      toast.error("Please select video file!");
     }
   };
 
   const getFiles = async () => {
-    setloading(true);
+   
     console.log(filedata);
+
     if (filedata) {
+      setloading(true);
       let data1 = new FormData();
       data1.append("file", filedata);
       data1.append("name", filedata.name);
@@ -184,9 +192,9 @@ const Addcoursehere = () => {
         const fileUploadedData = await res.json();
         setloading(false);
         if (fileUploadedData) {
-          swal("course work addded successfully", "success");
+          toast.success("PDF uploaded successfully.");
         }
-        console.log("file stored", fileUploadedData);
+        // console.log("file stored", fileUploadedData);
 
         setPost((prevPost) => ({
           ...prevPost,
@@ -194,9 +202,11 @@ const Addcoursehere = () => {
         }));
       } catch (error) {
         console.error("Error uploading file", error);
+        
       }
     } else {
       console.log("file data is undefined");
+      toast.error("Please select PDF file!");
     }
   };
 
@@ -207,35 +217,77 @@ const Addcoursehere = () => {
     });
   };
   //url post to save whole course
+  // const validateForm = () => {
+  //   const errors = {};
+
+  //   // Check if any required fields are empty
+  //   if (post.addedBy.trim() === "") {
+  //     errors.addedBy = "Added by is required";
+  //   }
+  //   if (post.title.trim() === "") {
+  //     errors.title = "Title is required";
+  //   }
+  //   if (post.description.trim() === "") {
+  //     errors.description = "Description is required";
+  //   }
+  //   if (post.price.trim() === "") {
+  //     errors.price = "Price is required";
+  //   } else if (isNaN(post.price)) {
+  //     errors.price = "Price must be a number";
+  //   }
+  //   if (post.approximateHours.trim() === "") {
+  //     errors.approximateHours = "Approximate Hours is required";
+  //   } else if (isNaN(post.approximateHours)) {
+  //     errors.approximateHours = "Approximate Hours must be a number";
+  //   }
+
+  //   setValidationErrors(errors);
+
+  //   // Return true if there are no errors, false otherwise
+  //   return Object.keys(errors).length === 0;
+  // };
   const validateForm = () => {
     const errors = {};
-
+  
     // Check if any required fields are empty
-    if (post.addedBy.trim() === "") {
+    if (!post.addedBy.trim()) {
       errors.addedBy = "Added by is required";
     }
-    if (post.title.trim() === "") {
+    if (!post.title.trim()) {
       errors.title = "Title is required";
     }
-    if (post.description.trim() === "") {
+    if (!post.description.trim()) {
       errors.description = "Description is required";
     }
-    if (post.price.trim() === "") {
+    if (!post.picture) {
+      errors.picture = "Picture is required";
+    }
+    if (!post.price.trim()) {
       errors.price = "Price is required";
     } else if (isNaN(post.price)) {
       errors.price = "Price must be a number";
     }
-    if (post.approximateHours.trim() === "") {
+    if (!post.drive.trim()) {
+      errors.drive = "Drive Link is required";
+    }
+    if (!post.approximateHours.trim()) {
       errors.approximateHours = "Approximate Hours is required";
     } else if (isNaN(post.approximateHours)) {
       errors.approximateHours = "Approximate Hours must be a number";
     }
-
+    if (!post.userfile) {
+      errors.userfile = "PDF file is required";
+    }
+    if (!post.videoUrl) {
+      errors.videoUrl = "Video is required";
+    }
+  
     setValidationErrors(errors);
-
+  
     // Return true if there are no errors, false otherwise
     return Object.keys(errors).length === 0;
   };
+  
   const savePost = async () => {
     // await API.createPost(post);
     // navigate('/');
@@ -243,7 +295,7 @@ const Addcoursehere = () => {
 
     if (!isValid) {
       console.log("Form validation failed");
-      swal("Failed", "Vlidation failed due to empty or incorrect values...");
+      toast.error("Please fill all mendatory fields.");
       return;
     }
 
@@ -409,10 +461,12 @@ const Addcoursehere = () => {
       </div>
 
 
-
-      <Button onClick={() => savePost()} variant="contained" color="primary">
-          Publish
+<div className="publish_coursebtn">
+<Button onClick={() => savePost()} style={{display:'flex',width:"40%"}} variant="contained" color="success">
+          Publish Course
         </Button>
+</div>
+      
     </Container>
   );
 };

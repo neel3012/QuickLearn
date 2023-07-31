@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 .joinstudent{
     height:90vh;
     width:100%;
@@ -6,4 +7,7 @@
 .joinstudent .inform{
   box-shadow: 0px 8px 7px #222;
  margin-top:6vh
+}
+.h1_loggedstudenr{
+  font-family: 'Oswald', sans-serif;
 }

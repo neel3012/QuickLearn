@@ -80,3 +80,11 @@ a {
  .tutor_access_n1 Button{
    margin-top: 10px;
  }
+ .publish_coursebtn{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center
+  ;margin: 30px 0;
+  
+ }

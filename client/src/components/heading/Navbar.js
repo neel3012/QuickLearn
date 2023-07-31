@@ -110,7 +110,7 @@ const Navbar = () => {
               </div>
               <input
                 type="text"
-                placeholder="Search anything"
+                placeholder="Search any course"
                 className="navbar_searchbody"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

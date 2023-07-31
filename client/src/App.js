@@ -29,6 +29,7 @@ import Becometeacher from './components/home/becomeinstructor/Becometeacher';
 import Availablecoursesbyid from './components/courses/Availablecoursesbyid';
 import PurchasedCourses from './components/payment/PurchasedCourses';
 import Authorizematerial from './components/courses/Authorizematerial';
+import AboutPage from './components/footer/AboutPage';
 
 function App() {
    const isTutorAuthenticated = useSelector(checkTutorAuthentication);
@@ -57,7 +58,9 @@ function App() {
          <Route path="/search" element={<SearchResults />} />
          <Route path="/video/:videoId" element={<VideoPage />} />
          <Route path='/' element={<Home/>}/>
+         <Route path='/about' element={<AboutPage/>}/>
          <Route path="*" element={< Joinasstudent/>} />
+         
    </Routes>
    <Footer/>
    
