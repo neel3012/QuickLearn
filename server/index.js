@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Router=require('./routes/route.js')
 const cors=require('cors')
+require('dotenv').config();
 // Create Express app
 const app = express();
 
@@ -13,9 +14,9 @@ app.use(bodyParser.json());
 // Add the following headers in your server response
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 // app.use(cors())
-
+const connectionURL=process.env.URL
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://pneel578:pneel578@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://${connectionURL}@cluster0.3jnmkyi.mongodb.net/?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(()=>console.log('db connected')).catch(err=>console.log(err));

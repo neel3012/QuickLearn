@@ -21,14 +21,31 @@ function Joinasstudent() {
   
     const handleSubmit = async (event) => {  //handling register
         event.preventDefault();
-        
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          swal("Invalid Email", "Please provide a valid email address.", "error");
+          return;
+        }
+      
+        // Password strength validation using regular expression
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(password)) {
+          swal(
+            "Weak Password",
+            "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character (@ $ ! % * ? &).",
+            "error"
+          );
+          return;
+        }
+      
         const data={
           username,
           password,
           email
         }
         console.log(data)
-        const res=await fetch('http://localhost:5000/joinasstudent',{
+        const res=await fetch('http://localhost:5000/joinasstudent',
+        {
           method:'POST',
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify(data)
@@ -44,7 +61,7 @@ function Joinasstudent() {
         else{
          
           swal("Register successfully","success")
-          
+         
           setEmail('');
         setPassword('');
         setUsername('');
@@ -52,7 +69,8 @@ function Joinasstudent() {
         }
        
       }
-    
+
+     
       const handleLogin = async (e) => {
         e.preventDefault();
         const data = {

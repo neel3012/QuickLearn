@@ -25,7 +25,22 @@ function Joinasteacher() {
   //to handle signup
   const handleSubmit = async (event) => {  //handling register
     event.preventDefault();
-    
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      swal("Invalid Email", "Please provide a valid email address.", "error");
+      return;
+    }
+  
+    // Password strength validation using regular expression
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(password)) {
+      swal(
+        "Weak Password",
+        "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character (@ $ ! % * ? &).",
+        "error"
+      );
+      return;
+    }
     const data={
       username,
       password,
@@ -174,7 +189,7 @@ function Joinasteacher() {
     
     
     <form onSubmit={handleSubmit} method='POST'>
-      <h1>Create Account</h1>
+      <h1 className='join_studentreg'>Create Account</h1>
 <br/>
       <label>
         Email:
@@ -197,7 +212,7 @@ function Joinasteacher() {
       </label>
 
       <label>
-        Name:
+        Username:
         <input
           name="username"
           type="text"
@@ -221,7 +236,7 @@ function Joinasteacher() {
     
     
     <form onSubmit={handleLogin} method='POST'>
-      <h1>Login Account</h1>
+      <h1 className='join_studentlog'>Login Account</h1>
 <br/>
       <label>
         Email:
