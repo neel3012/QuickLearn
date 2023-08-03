@@ -58,7 +58,8 @@ function Availablecoursesbyid() {
           amount: courseData.price * 100,
           token: token.id,
           courseID: courseData._id,
-          studentName: studeentdata.findusername.username
+          studentName: studeentdata.findusername.username,
+          studentEmail:studeentdata.findusername.email
         }),
       });
 

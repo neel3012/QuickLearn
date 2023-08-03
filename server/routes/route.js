@@ -10,38 +10,8 @@ const { registerstudent, loggedstudentinn } = require('../controller/studentCont
 const Payment = require('../model/payment.js');
 const { getVideo, uploadVideo } = require('../controller/videoController.js');
 const nodemailer = require('nodemailer');
-router.post('/process-payment', async (req, res) => {
-  try {
-    const { amount, token, courseID,studentName } = req.body;
-    console.log( amount, token, courseID,studentName )
-    // Create a charge using the Stripe API
-    const charge = await stripe.charges.create({
-      amount: amount,
-      currency: 'cad',
-      description: 'Payment for Course',
-      source: token,
-    });
-    if(charge){
-      const paymentinfo = {  token, courseID,studentName };
-      const payment = new Payment(paymentinfo);
-      await payment.save();
-      return res.status(200).json({ message: 'Payment successful' });
-    }
-    else{
-      return res.status(200).json({ message: 'Additional actions required..' });
-    }
+const { paymentprocess } = require('../controller/paymentprocess.js');
 
-    // Handle the successful payment response
-    // Send a success message or perform any additional actions
-
-    
-  } catch (error) {
-    // Handle any errors that occurred during payment processing
-    // Send an error response back to the front-end
-    console.log(error);
-    res.status(500).json({ error: 'Payment processing failed' });
-  }
-});
 
 router.post('/joinasteacher', registerTutor);
 router.post('/teacherlogin',loginteacher)
@@ -67,6 +37,7 @@ router.get('/uploadedvideo/:filename', getVideo);//student section....
 router.delete('/items/:courseID',deletecourse)
 router.post('/joinasstudent',registerstudent);
 router.post('/studentlogin',loggedstudentinn);
+router.post('/process-payment',paymentprocess);
 
 
 module.exports = router;
